@@ -3,25 +3,23 @@ COMP 426 Final
 Functionality: (easiest to hardest)
 
 No baby - Michael
-Only Certain Airline - Hutch
-Specify Seat (unlucky number) - Suvrat
-Specify Seat (aisle, window, middle)
 Specify Cabin (class) - Michael
-Mile High Club (specify gender, age)
+maximum price sider - Michael
 
-
-No fly after midnight (no red-eye)
+Only Certain Airline - Hutch
+Mile High Club (specify gender, age) - Hutch
 Latitude (avoid west / east of a place) - Hutch
-maximum price sider
 
-
-
+Specify Seat (unlucky number) - Suvrat
+Specify Seat (aisle, window, middle) - Suvrat
+No fly after midnight (no red-eye) - Suvrat
 
 
 HTML:
 
 
 CSS:
+
 
 
 JS:
