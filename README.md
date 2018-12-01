@@ -23,3 +23,4 @@ CSS:
 
 
 JS:
+createticketview(seat number, other seat information like where it is, class, airline, depart and arrive time, type of plane, departure and arrival airport information - weather)
