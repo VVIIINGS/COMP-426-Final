@@ -1,14 +1,17 @@
 COMP 426 Final
 
-Functionality:
+Functionality: (easiest to hardest)
 
-Only Certain Airline
-Specify Seat (aisle, window, middle)
+No baby - Michael
+Only Certain Airline - Hutch
 Specify Seat (unlucky number)
+Specify Seat (aisle, window, middle)
 Specify Cabin (class)
+Mile High Club (specify gender, age)
+
+
 No fly after midnight (no red-eye)
 Latitude (avoid west / east of a place)
-No baby
 maximum price sider
 
 
