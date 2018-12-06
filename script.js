@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
 
-    //stuff
+    //MW: I changed the document read function to include everything 
+    //so it will load of the functions automatically (feel free to change back)
 
 
-});
+
 
 var getweatherdata = function(city){
 
@@ -19,3 +20,17 @@ var getweatherdata = function(city){
     })
 
 }
+
+//MW: functions for slider
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    output.innerHTML = this.value;
+}
+
+//MW: end functions for slider
+
+});
