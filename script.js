@@ -27,7 +27,7 @@ var output = document.getElementById("demo");
 output.innerHTML = slider.value;
 
 slider.oninput = function() {
-    //alert("hey");
+    alert("hey");
   output.innerHTML = this.value;
 }
 //MW: end functions for slider
