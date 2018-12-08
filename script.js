@@ -1,3 +1,6 @@
+// Use this URL for API Calls
+var root_url = "http://comp426.cs.unc.edu:3001/";
+
 $(document).ready(function(){
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
