@@ -1,6 +1,19 @@
 // Use this URL for API Calls
 var root_url = "http://comp426.cs.unc.edu:3001/";
 
+var _nobaby = false;
+var _cabinclass = false;
+var _priceslider = true;
+
+var _airline_picker = false;
+var _mhc = false;
+var _latitude_picker = false;
+
+var _seatnumber = false;
+var amw = false;
+var noredeye = false;
+
+
 $(document).ready(function(){
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
@@ -33,7 +46,7 @@ var getweatherdata = function(city){
 
 var build_interface = function(){
 let body = $('body');
-body.empty();
+
 // Can dynamically add elements here
 }
 
@@ -70,3 +83,6 @@ var latitude_picker = function(){
 
 
 };
+
+
+
