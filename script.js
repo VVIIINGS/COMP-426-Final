@@ -37,7 +37,6 @@ body.empty();
 // Can dynamically add elements here
 }
 
-<<<<<<< HEAD
 //MW: functions for slider
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
@@ -56,8 +55,6 @@ slider.oninput = function() {
 
 
 
-});
-=======
 // Only show tickets from selected airline
 var airline_picker = function(){
 
@@ -73,4 +70,3 @@ var latitude_picker = function(){
 
 
 };
->>>>>>> master
