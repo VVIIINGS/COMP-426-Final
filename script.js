@@ -28,3 +28,24 @@ var getweatherdata = function(city){
     });
 };
 
+var build_interface = function(){
+let body = $('body');
+body.empty();
+// Can dynamically add elements here
+}
+
+// Only show tickets from selected airline
+var airline_picker = function(){
+
+};
+
+// Only show available tickets next to chosen gender and age
+var mhc = function(){
+
+};
+
+// Avoid east / west of certain latitude
+var latitude_picker = function(){
+
+
+};
