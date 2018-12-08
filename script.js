@@ -1,14 +1,22 @@
 $(document).ready(function(){
-
-
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
+    // HY We don't need to do this, we can call functions dynamically using onclick functions
 
+//MW: functions for slider
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value; // Display the default slider value
 
+// Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+    }
+//MW: end functions for slider
 
+});
 
 var getweatherdata = function(city){
-
     $.ajax({
         url: "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=c10bb3bd22f90d636baa008b1529ee25",
         type: "GET",
@@ -17,20 +25,6 @@ var getweatherdata = function(city){
             console.log(data);
             //will have to do more with the data. for now, it just logs it.
         }
-    })
+    });
+};
 
-}
-
-//MW: functions for slider
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-    output.innerHTML = this.value;
-}
-
-//MW: end functions for slider
-
-});
