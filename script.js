@@ -10,8 +10,8 @@ var _mhc = false;
 var _latitude_picker = false;
 
 var _seatnumber = false;
-var amw = false;
-var noredeye = false;
+var _amw = false;
+var _noredeye = false;
 
 
 $(document).ready(function(){
@@ -44,11 +44,45 @@ var getweatherdata = function(city){
     });
 };
 
-var build_interface = function(){
+var build_ticket_interface = function(){
 let body = $('body');
+if(_nobaby){
 
-// Can dynamically add elements here
 }
+
+if(_cabinclass){
+
+}
+
+if(_priceslider){
+
+}
+
+if(_airline_picker){
+
+}
+
+if(_mhc){
+
+}
+
+if(_latitude_picker){
+
+}
+
+if(_seatnumber){
+
+}
+
+if(_amw){
+
+}
+
+if(_noredeye){
+
+}
+
+};
 
 //MW: functions for slider
 var slider = document.getElementById("myRange");
@@ -70,17 +104,18 @@ slider.oninput = function() {
 
 // Only show tickets from selected airline
 var airline_picker = function(){
+    _airline_picker = !_airline_picker;
 
 };
 
 // Only show available tickets next to chosen gender and age
 var mhc = function(){
-
+    _mhc = !_mhc;
 };
 
 // Avoid east / west of certain latitude
 var latitude_picker = function(){
-
+    _latitude_picker = !_latitude_picker;
 
 };
 
