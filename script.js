@@ -8,6 +8,7 @@ var acode = 'CLT';
 $(document).ready(function(){
 
   login();
+  getcities();
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
     // HY We don't need to do this, we can call functions dynamically using onclick functions
@@ -173,17 +174,3 @@ var login = function(){
     });
 
 }
-
-var postweather = function (city) {
-    $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=c10bb3bd22f90d636baa008b1529ee25",
-        type: "GET",
-        dataType: "jsonp",
-        success: function (data) {
-            console.log(data);
-            //will have to do more with the data. for now, it just logs it.
-        }
-    })
-}
-
-
