@@ -2,7 +2,7 @@ COMP 426 Final
 
 Functionality: (easiest to hardest)
 
-No baby - Michael
+No baby - Michael 
 Specify Cabin (class) - Michael
 maximum price sider - Michael
 

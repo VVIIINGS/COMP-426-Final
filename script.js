@@ -1,20 +1,13 @@
 // Use this URL for API Calls
 var root_url = "http://comp426.cs.unc.edu:3001/";
+var acode = 'CLT';
 
-var _nobaby = false;
-var _cabinclass = false;
-var _priceslider = true;
 
-var _airline_picker = false;
-var _mhc = false;
-var _latitude_picker = false;
-
-var _seatnumber = false;
-var _amw = false;
-var _noredeye = false;
 
 
 $(document).ready(function(){
+
+  login();
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
     // HY We don't need to do this, we can call functions dynamically using onclick functions
@@ -29,6 +22,8 @@ $(document).ready(function(){
         output.innerHTML = this.value;
     }
 //MW: end functions for slider
+//this.build_flight_interface('CLT');
+
 
 });
 
@@ -44,80 +39,151 @@ var getweatherdata = function(city){
     });
 };
 
-var build_ticket_interface = function(){
+var acode ='Charlotte';
+var aid = 0;
+var flightarray = [];
+
+var build_flight_interface = function(acode){
 let body = $('body');
-if(_nobaby){
+alert('here');
 
+$.ajax(
+{
+url: root_url + 'airports?filter[code]='+acode,
+type: 'GET',
+//xhrFields: {withCredentials: true},
+success: (response) => {
+  alert(response);
+aid = response.id;
+alert(response);
+},
+
+error: () => {alert('error');}
+
+});
+
+
+
+//function adds div
+//flight
+//departs at/ arrives at
+//number
+
+//if reponse's id matches departure_id or arrival_id of saved variable,
+//add flight to array
+
+//incoming or outgoing
+//incoming blue
+//outgoing green
+
+
+//api call to make when given departure_id or arrival_id 
+//if that matches, add response to flightarray
+//flightarray.push(response)
+
+$.ajax(root_url+'flights',
+{
+type: 'GET',
+dataType: 'json',
+xhrFields: {withCredentials: true},
+success: (response) => {
+   /*for each flight in flights
+  check if id matches
+  if so add to array
+  if not go to the next one */
+  //return response;
+  
+   
 }
+});
 
-if(_cabinclass){
 
-}
+//if flight.departure_id = aid
+  /*for each flight in flights
+  check if id matches
+  if so add to array
+  if not go to the next one */
 
-if(_priceslider){
+  
 
-}
 
-if(_airline_picker){
 
-}
-
-if(_mhc){
-
-}
-
-if(_latitude_picker){
-
-}
-
-if(_seatnumber){
-
-}
-
-if(_amw){
-
-}
-
-if(_noredeye){
-
-}
+//};
 
 };
-
 //MW: functions for slider
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
+// var slider = document.getElementById("myRange");
+// var output = document.getElementById("demo");
+// output.innerHTML = slider.value;
 
-slider.oninput = function() {
-    alert("hey");
-  output.innerHTML = this.value;
-}
+// slider.oninput = function() {
+//     alert("hey");
+//   output.innerHTML = this.value;
+// }
 //MW: end functions for slider
 
 
+//use this function to login
+var login = function(){
+    let data = {
+        user: {
+          username: "smh",
+          password: "charlotte",
+        },
+      };
+    $.ajax({
+        url:  'http://comp426.cs.unc.edu:3001/sessions',
+        type: 'POST',
+        data: data,
+        xhrFields: { withCredentials: true },
+        success: function(d, textStatus, jqXHR) {
+          alert("you are logged in")
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          if (jqXHR.status === 0) {
+            alert(
+              'Unable to reach server. Make sure you are online. If you are off-campus, make sure you are connected to the VPN.'
+            );
+          } else if (jqXHR.status === 401) {
+            alert(
+              'Incorrect username and/or password.'
+            );
+          } else {
+            alert(
+              'An unknown error occurred logging in.'
+            );
+          }
+        },
+        complete: function(jqXHR, textStatus) {
+          //isSubmitting = false;
+          //$loginSubmitButton.prop('disabled', false);
+        },
+      });
+    }
 
-//MW: no baby
+    var getcities = function () {
+    $.ajax({
+        url: root_url + '/airports',
+        type: 'GET',
+        xhrFields: { withCredentials: true },
+        success: (response) => {
+            console.log(response);
+            console.log(response.length)
+        }
+    });
 
+}
 
-
-
-// Only show tickets from selected airline
-var airline_picker = function(){
-    _airline_picker = !_airline_picker;
-
-};
-
-// Only show available tickets next to chosen gender and age
-var mhc = function(){
-    _mhc = !_mhc;
-};
-
-// Avoid east / west of certain latitude
-var latitude_picker = function(){
-    _latitude_picker = !_latitude_picker;
-
-};
-
+var postweather = function (city) {
+    $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=c10bb3bd22f90d636baa008b1529ee25",
+        type: "GET",
+        dataType: "jsonp",
+        success: function (data) {
+            console.log(data);
+            //will have to do more with the data. for now, it just logs it.
+        }
+    })
+}
 
 
