@@ -46,23 +46,15 @@ var aid = 0;
 var flightarray = [];
 
 var acodetoaid = function(acode){
-    let body = $('body');
-    alert('in atoaid');
-
-    $.ajax(
-        {
+    $.ajax({
             url: root_url + 'airports?filter[code]='+acode,
             type: 'GET',
             xhrFields: {withCredentials: true},
             success: (response) => {
-                console.log(response.id);
-                aid = response.id;
-
+                aid = response[0].id;
             },
-
             error: () => {alert('error');}
         });
-
 };
 
 var build_flight_interface = function(acode){
