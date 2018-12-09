@@ -3,8 +3,6 @@ var root_url = "http://comp426.cs.unc.edu:3001/";
 var acode = 'CLT';
 
 
-
-
 $(document).ready(function () {
 
   login();
@@ -29,6 +27,7 @@ $(document).ready(function () {
 
 });
 
+//SJ
 var getweatherdata = function (city) {
   $.ajax({
     url: "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=c10bb3bd22f90d636baa008b1529ee25",
@@ -126,6 +125,7 @@ var login = function () {
   });
 }
 
+//SJ
 var getcities = function () {
   $.ajax({
     url: root_url + '/airports',
@@ -144,8 +144,8 @@ var getcities = function () {
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      //        console.log(response);
-      //      console.log(response.length)
+      //console.log(response);
+      //console.log(response.length)
     }
   });
 }
