@@ -9,6 +9,7 @@ $(document).ready(function(){
 
   login();
   getcities();
+  acodetoaid('CLT');
     //MW: I changed the document read function to include everything 
     //so it will load of the functions automatically (feel free to change back)
     // HY We don't need to do this, we can call functions dynamically using onclick functions
@@ -44,24 +45,28 @@ var acode ='Charlotte';
 var aid = 0;
 var flightarray = [];
 
+var acodetoaid = function(acode){
+    let body = $('body');
+    alert('in atoaid');
+
+    $.ajax(
+        {
+            url: root_url + 'airports?filter[code]='+acode,
+            type: 'GET',
+            xhrFields: {withCredentials: true},
+            success: (response) => {
+                console.log(response.id);
+                aid = response.id;
+
+            },
+
+            error: () => {alert('error');}
+        });
+
+};
+
 var build_flight_interface = function(acode){
-let body = $('body');
-alert('here');
 
-$.ajax(
-{
-url: root_url + 'airports?filter[code]='+acode,
-type: 'GET',
-//xhrFields: {withCredentials: true},
-success: (response) => {
-  alert(response);
-aid = response.id;
-alert(response);
-},
-
-error: () => {alert('error');}
-
-});
 
 
 
@@ -168,8 +173,8 @@ var login = function(){
         type: 'GET',
         xhrFields: { withCredentials: true },
         success: (response) => {
-            console.log(response);
-            console.log(response.length)
+    //        console.log(response);
+      //      console.log(response.length)
         }
     });
 
