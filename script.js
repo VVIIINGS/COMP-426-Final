@@ -7,7 +7,8 @@ $(document).ready(function () {
 
   login();
   getcities();
-  acodetoaid('CLT');
+  build_flight_interface('CLT');
+
   //MW: I changed the document read function to include everything 
   //so it will load of the functions automatically (feel free to change back)
   // HY We don't need to do this, we can call functions dynamically using onclick functions
@@ -54,38 +55,13 @@ var acodetoaid = function (acode) {
     },
     error: () => { alert('error'); }
   });
+  return aid;
 };
 
 var build_flight_interface = function (acode) {
-  //function adds div
-  //flight
-  //departs at/ arrives at
-  //number
+    let aid = acodetoaid(acode);
+    getflightinfo(aid);
 
-  //if reponse's id matches departure_id or arrival_id of saved variable,
-  //add flight to array
-
-  //incoming or outgoing
-  //incoming blue
-  //outgoing green
-
-  //api call to make when given departure_id or arrival_id 
-  //if that matches, add response to flightarray
-  //flightarray.push(response)
-
-  $.ajax({
-    url: root_url + 'flights',
-    type: 'GET',
-    dataType: 'json',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      /*for each flight in flights
-     check if id matches
-     if so add to array
-     if not go to the next one */
-      //return response;
-    }
-  });
 };
 
 var login = function () {
@@ -136,23 +112,10 @@ var getcities = function () {
       console.log(response.length)
     }
   });
-}
+} ;
 
-var getcities = function () {
-  $.ajax({
-    url: root_url + '/airports',
-    type: 'GET',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      //console.log(response);
-      //console.log(response.length)
-    }
-  });
-}
 
-var aidtest = 161227; //test arrival id for 
-
-var getflightinfo = function () {
+var getflightinfo = function (aid) {
   $.ajax({
     url: root_url + 'flights',
     type: 'GET',
