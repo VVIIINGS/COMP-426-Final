@@ -10,9 +10,9 @@ $(document).ready(function () {
   login();
   getcities();
   acodetoaid('CLT');
-    //MW: I changed the document read function to include everything 
-    //so it will load of the functions automatically (feel free to change back)
-    // HY We don't need to do this, we can call functions dynamically using onclick functions
+  //MW: I changed the document read function to include everything 
+  //so it will load of the functions automatically (feel free to change back)
+  // HY We don't need to do this, we can call functions dynamically using onclick functions
 
   //MW: functions for slider
   var slider = document.getElementById("myRange");
@@ -45,27 +45,23 @@ var acode = 'Charlotte';
 var aid = 0;
 var flightarray = [];
 
-var acodetoaid = function(acode){
-    $.ajax({
-            url: root_url + 'airports?filter[code]='+acode,
-            type: 'GET',
-            xhrFields: {withCredentials: true},
-            success: (response) => {
-                aid = response[0].id;
-            },
-            error: () => {alert('error');}
-        });
+var acodetoaid = function (acode) {
+  $.ajax({
+    url: root_url + 'airports?filter[code]=' + acode,
+    type: 'GET',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
+      aid = response[0].id;
+    },
+    error: () => { alert('error'); }
+  });
 };
 
-var build_flight_interface = function(acode){
-
-
-
-
-//function adds div
-//flight
-//departs at/ arrives at
-//number
+var build_flight_interface = function (acode) {
+  //function adds div
+  //flight
+  //departs at/ arrives at
+  //number
 
   //if reponse's id matches departure_id or arrival_id of saved variable,
   //add flight to array
@@ -74,25 +70,23 @@ var build_flight_interface = function(acode){
   //incoming blue
   //outgoing green
 
-
   //api call to make when given departure_id or arrival_id 
   //if that matches, add response to flightarray
   //flightarray.push(response)
 
-$.ajax(root_url+'flights',
-{
-type: 'GET',
-dataType: 'json',
-xhrFields: {withCredentials: true},
-success: (response) => {
-   /*for each flight in flights
-  check if id matches
-  if so add to array
-  if not go to the next one */
-  //return response;
-  
-  
-
+  $.ajax({
+    url: root_url + 'flights',
+    type: 'GET',
+    dataType: 'json',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
+      /*for each flight in flights
+     check if id matches
+     if so add to array
+     if not go to the next one */
+      //return response;
+    }
+  });
 };
 
 var login = function () {
@@ -144,17 +138,20 @@ var getcities = function () {
   });
 }
 
-    var getcities = function () {
-    $.ajax({
-        url: root_url + '/airports',
-        type: 'GET',
-        xhrFields: { withCredentials: true },
-        success: (response) => {
-    //        console.log(response);
+var getcities = function () {
+  $.ajax({
+    url: root_url + '/airports',
+    type: 'GET',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
+      //        console.log(response);
       //      console.log(response.length)
-        }
-    });
+    }
+  });
+}
+
 var aidtest = 161227; //test arrival id for 
+
 var getflightinfo = function () {
   $.ajax({
     url: root_url + 'flights',
