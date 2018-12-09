@@ -67,17 +67,17 @@ var build_flight_interface = function(acode){
 //departs at/ arrives at
 //number
 
-//if reponse's id matches departure_id or arrival_id of saved variable,
-//add flight to array
+  //if reponse's id matches departure_id or arrival_id of saved variable,
+  //add flight to array
 
-//incoming or outgoing
-//incoming blue
-//outgoing green
+  //incoming or outgoing
+  //incoming blue
+  //outgoing green
 
 
-//api call to make when given departure_id or arrival_id 
-//if that matches, add response to flightarray
-//flightarray.push(response)
+  //api call to make when given departure_id or arrival_id 
+  //if that matches, add response to flightarray
+  //flightarray.push(response)
 
 $.ajax(root_url+'flights',
 {
