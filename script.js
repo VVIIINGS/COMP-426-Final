@@ -138,7 +138,7 @@ var login = function(){
         data: data,
         xhrFields: { withCredentials: true },
         success: function(d, textStatus, jqXHR) {
-          alert("you are logged in")
+          console.log("you are logged in")
         },
         error: function(jqXHR, textStatus, errorThrown) {
           if (jqXHR.status === 0) {
