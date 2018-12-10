@@ -41,26 +41,31 @@ var getweatherdata = function (city) {
   });
 };
 
-var acode = 'Charlotte';
-var aid = 0;
+var acode = 'CLT';
+//var aid = 0;
 var flightarray = [];
 
 var acodetoaid = function (acode) {
+  let id = 0;
   $.ajax({
     url: root_url + 'airports?filter[code]=' + acode,
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      aid = response[0].id;
+     //fixed return bug in acodetoaid; works now
+     //alert(response[0].id);
+      id =response[0].id;
     },
+
     error: () => { alert('error'); }
   });
-  return aid;
+  //alert(id);
+  return id;
 };
 
 var build_flight_interface = function (acode) {
-    let aid = acodetoaid(acode);
-    getflightinfo(aid);
+    
+    getflightinfo(acodetoaid(acode));
 
 };
 
@@ -116,20 +121,33 @@ var getcities = function () {
 
 
 var getflightinfo = function (aid) {
+  let testid = 161226;
+  let departure = [];
+  let arrival = [];
   $.ajax({
     url: root_url + 'flights',
     type: 'GET',
     dataType: 'json',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      /*for each flight in flights
-      check if id matches
-      if so add to array
-      if not go to the next one */
-      //return response;
-      console.log(response)
+     
+      for (var x = 0; x  <response.length; x++){
+        if( response[x].departure_id == testid){
+          departure.push(response[x]);
+          
+        }
 
+        if(response[x].arrival_id == testid){
+          arrival.push(response[x]);
+        }
+   
+      
+      }
+   
     }
   });
 
+  return [departure, arrival];
 };
+
+
