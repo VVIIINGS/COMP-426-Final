@@ -185,6 +185,7 @@ var getflightinfo = function (aid) {
       }
     }
   });
+  alert('Flight info retrieved');
   return [departure, arrival];
 
 };
