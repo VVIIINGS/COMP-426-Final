@@ -7,7 +7,8 @@ $(document).ready(function () {
   login();
   //getcities();
     //build_flight_interface('BOS');
-
+  alert("are you logged in?");
+    build_flight_interface('CLT');
 
 });
 
@@ -116,9 +117,10 @@ var build_flight_interface = function (acode) {
     body.append('<div class="flight arrivals">');
     for(let i = 0; i < arrivals.length; i++){
         alert('a'+i);
+        //alert(arrivals[i].departs_at);
         body.append(`
          <div class="a` + i +`">
-            <span class="time"> Departs at: ` + arrivals[i].departs_at + ` </span>
+            <span class="time"> Departs at: ` + arrivals[i].departs_at.slice(11,16) + ` </span>
             <span class="destination"> Destination: ` + aidtocity(arrivals[i].departure_id) + ` </span>
             <span class="flightnum"> Flight number: ` +  arrivals[i].number + `  </span>
             <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
@@ -220,3 +222,7 @@ var getflightinfo = function (aid) {
 // //MW: end functions for slider
 // //this.build_flight_interface('CLT');
 //
+
+
+
+
