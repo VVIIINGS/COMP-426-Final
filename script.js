@@ -6,8 +6,14 @@ var acode = 'CLT';
 $(document).ready(function () {
 
   login();
-  getcities();
-  build_flight_interface('CLT');
+  //getcities();
+
+  alert(acodetoaid('CLT'));
+
+  //  console.log(aidtoacode(161140));
+
+
+  //build_flight_interface('CLT');
 
   //MW: I changed the document read function to include everything 
   //so it will load of the functions automatically (feel free to change back)
@@ -41,31 +47,82 @@ var getweatherdata = function (city) {
   });
 };
 
-var acode = 'CLT';
-//var aid = 0;
-var flightarray = [];
+
+
 
 var acodetoaid = function (acode) {
-  let id = 0;
-  $.ajax({
+    let value = 7;
+   $.ajax({
     url: root_url + 'airports?filter[code]=' + acode,
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-     //fixed return bug in acodetoaid; works now
-     //alert(response[0].id);
-      id =response[0].id;
+         value = response[0].id;
     },
-
-    error: () => { alert('error'); }
+    error: () => { alert('error'); return value; }
   });
-  //alert(id);
-  return id;
+    alert('Converting airport code to airport id');
+    return value;
+};
+
+var aidtoacode = function (aid) {
+
+    alert('entered aidtoacode');
+    alert('aid is'+aid)
+    let airports = [];
+    $.ajax({
+        url: root_url + 'airports',
+        type: 'GET',
+        xhrFields: {withCredentials: true},
+        success: (response) => {
+            alert('success');
+            airports = response[0];
+
+        },
+        error: () => { alert('error in aidtoacode'); }
+
+    });
+
+    return airports;
+    //console.log(airports);
+    // for (let i = 0, i < airports.length; i ++){
+    //
+    //
+    // }
+    // return
 };
 
 var build_flight_interface = function (acode) {
-    
-    getflightinfo(acodetoaid(acode));
+    let body = $('body');
+
+    // Get airport id given airport code & Get all flight objects that go through that airport
+    let flights = getflightinfo(acodetoaid(acode));
+    let departures = flights[0];
+    let arrivals = flights[1];
+    for(let i = 0; i < departures.length; i++){
+        // body.append(`
+        // <div class="flight departures" >
+        //     <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
+        //     <span class="destination"> Destination: ` + departures[i].     `</span>
+        //
+        // </div>
+        //
+        // `);
+    }
+    // Separate departures and arrivals
+    body.append('<br> <br>');
+
+    for(let i = 0; i < arrivals.length; i++){
+        body.append(`
+        <div class="flight arrivals" >   
+            
+        
+        </div>
+        
+        `);
+
+    }
+
 
 };
 
