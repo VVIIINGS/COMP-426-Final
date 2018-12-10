@@ -12,14 +12,7 @@ $(document).ready(function () {
   //put in all airports
   add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 
-  rain_slider.oninput = function () {
-    console.log("rain slider")
-    add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-  }
-  snow_slider.oninput = function () {
-    console.log("snow slider")
-    add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-  }
+
   //getcities();
   //build_flight_interface('BOS');
   //alert("are you logged in?");
@@ -285,26 +278,17 @@ var build_homepage = function () {
   search.append(slidecontainer);
   search.append('<p>Snow:</p>');
   let switchcontainer1 = $('<label class="switch"></label>');
-  switchcontainer1.append('<input type="checkbox" id="snow_box">');
+  switchcontainer1.append('<input type="checkbox" id="snow_box" oninput="temp_release()">');
   switchcontainer1.append('<span class="toggleslider round"></span>');
   search.append(switchcontainer1)
   search.append('<p>Rain:</p>')
   let switchcontainer2 = $('<label class="switch"></label>');
-  switchcontainer2.append('<input type="checkbox" id="rain_box">');
+  switchcontainer2.append('<input type="checkbox" id="rain_box" oninput="temp_release()">');
   switchcontainer2.append('<span class="toggleslider round"></span>');
   search.append(switchcontainer2)
   windowcontainer.append(search);
   windowcontainer.append('<div class="ticketwindow"></div>');
-  var snow_slider = document.getElementById("snow_box");
-  var rain_slider = document.getElementById("rain_box");
-  rain_slider.oninput = function () {
-    console.log("rain slider")
-    add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-  }
-  snow_slider.oninput = function () {
-    console.log("snow slider")
-    add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-  }
+
 }
 
 //when the button is clicked, it converts button value to a string
@@ -323,6 +307,7 @@ var temp_update = function () {
 }
 //SJ - when temp slider is released, refresh the airports
 var temp_release = function () {
+  console.log("BUTTON PUSHED")
   var slider = document.getElementById("myRange");
   var snow_slider = document.getElementById("snow_box")
   var rain_slider = document.getElementById("rain_box")
