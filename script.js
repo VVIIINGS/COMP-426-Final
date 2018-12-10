@@ -10,6 +10,9 @@ $(document).ready(function () {
 
   alert(acodetoaid('CLT'));
 
+  getflightinfo(161226);
+  aidtocity(161226);
+
   //  console.log(aidtoacode(161140));
 
 
@@ -51,69 +54,67 @@ var getweatherdata = function (city) {
 
 
 var acodetoaid = function (acode) {
-    let value = 7;
-   $.ajax({
+  let value = 7;
+  $.ajax({
     url: root_url + 'airports?filter[code]=' + acode,
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-         value = response[0].id;
+      value = response[0].id;
     },
     error: () => { alert('error'); return value; }
   });
-    alert('Converting airport code to airport id');
-    return value;
+  alert('Converting airport code to airport id');
+  return value;
 };
 
-var aidtoacode = function (aid) {
+var aidtocity = function (aid) {
 
-    alert('entered aidtoacode');
-    alert('aid is'+aid)
-    let airports = [];
-    $.ajax({
-        url: root_url + 'airports',
-        type: 'GET',
-        xhrFields: {withCredentials: true},
-        success: (response) => {
-            alert('success');
-            airports = response[0];
 
-        },
-        error: () => { alert('error in aidtoacode'); }
+  $.ajax({
+    url: root_url + 'airports',
+    type: 'GET',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
 
-    });
+      console.log(response);
+      for (let i = 0; i < response.length; i++) {
+        if (response[i].id = aid) {
+          //TODO: replace test city code above with variable
+          console.log(response[i].city);
+          return (response[i].city);
 
-    return airports;
-    //console.log(airports);
-    // for (let i = 0, i < airports.length; i ++){
-    //
-    //
-    // }
-    // return
+        }
+      }
+    },
+    error: () => { alert('error in aidtoacode'); }
+
+  });
+
 };
 
 var build_flight_interface = function (acode) {
-    let body = $('body');
+  let body = $('body');
 
-    // Get airport id given airport code & Get all flight objects that go through that airport
-    let flights = getflightinfo(acodetoaid(acode));
-    let departures = flights[0];
-    let arrivals = flights[1];
-    for(let i = 0; i < departures.length; i++){
-        // body.append(`
-        // <div class="flight departures" >
-        //     <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
-        //     <span class="destination"> Destination: ` + departures[i].     `</span>
-        //
-        // </div>
-        //
-        // `);
-    }
-    // Separate departures and arrivals
-    body.append('<br> <br>');
+  // Get airport id given airport code & Get all flight objects that go through that airport
+  let flights = getflightinfo(acodetoaid(acode));
+  let departures = flights[0];
+  let arrivals = flights[1];
+  for (let i = 0; i < departures.length; i++) {
+    // body.append(`
+    // <div class="flight departures" >
+    //     <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
+    //     <span class="destination"> Destination: ` + departures[i].     `</span>
+    //
+    // </div>
+    //
+    // `);
+  }
+  // Separate departures and arrivals
+  body.append('<br> <br>');
 
-    for(let i = 0; i < arrivals.length; i++){
-        body.append(`
+  for (let i = 0; i < arrivals.length; i++) {
+    body.append(`
         <div class="flight arrivals" >   
             
         
@@ -121,7 +122,7 @@ var build_flight_interface = function (acode) {
         
         `);
 
-    }
+  }
 
 
 };
@@ -174,11 +175,11 @@ var getcities = function () {
       console.log(response.length)
     }
   });
-} ;
+};
 
 
 var getflightinfo = function (aid) {
-  let testid = 161226;
+  //aid = 161226;
   let departure = [];
   let arrival = [];
   $.ajax({
@@ -187,24 +188,27 @@ var getflightinfo = function (aid) {
     dataType: 'json',
     xhrFields: { withCredentials: true },
     success: (response) => {
-     
-      for (var x = 0; x  <response.length; x++){
-        if( response[x].departure_id == testid){
+
+      for (var x = 0; x < response.length; x++) {
+        if (response[x].departure_id == aid) {
           departure.push(response[x]);
-          
+
+
         }
 
-        if(response[x].arrival_id == testid){
+        if (response[x].arrival_id == aid) {
           arrival.push(response[x]);
         }
-   
-      
+
+
       }
-   
+
     }
   });
+  //TODO: take alerts and aidtocity function out below, this is for testing
 
   return [departure, arrival];
+
 };
 
 
