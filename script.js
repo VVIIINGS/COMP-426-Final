@@ -9,6 +9,8 @@ $(document).ready(function () {
 
   login();
   build_homepage();
+  //put in all airports
+  add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 
   rain_slider.oninput = function () {
     console.log("rain slider")
@@ -274,8 +276,7 @@ var build_homepage = function () {
   windowcontainer.append(search);
   windowcontainer.append('<div class="ticketwindow"></div>');
 
-  //put in all airports
-  add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
+
 }
 
 //when the button is clicked, it converts button value to a string
