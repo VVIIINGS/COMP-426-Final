@@ -147,25 +147,25 @@ input:checked + .toggleslider:before {
 
 div.arrivals{
   float: left;
-  width: auto;
+  width: 44%;
   height: 500px;
   border: 3px solid #73AD21;
   padding: 10px;
   overflow: scroll;
-  color: purple;
+  color: rgb(209, 166, 131);
 }
 
 div.departures{
   float: right;
-  width: auto;
-  height: 5px;
+  width: 52%;
+  height: 500px;
   border: 3px solid #A34444;
   padding: 10px;
   overflow: scroll;
-  color: rgb(235, 2, 2);
+  color: rgb(209, 166, 131);
 }
 
-
+/*
 #departures{
   float: right;
   width: auto;
@@ -185,3 +185,4 @@ div.departures{
   overflow: scroll;
   color: purple;
 }
+*/
