@@ -60,6 +60,25 @@ var iscancelled = function (fid) {
 // Set this method's return value to flight status span on button click
 // Effectively, this should cancel the flight then update interface
 var cancelflight = function (fid) {
+
+    //updates all tickets to be purchased
+
+    for (let i = 0; i < instances.length; i++) {
+        if (instances[i].flight_id == fid) {
+            $.ajax(root_url + "instances/" + instances[i].id, {
+                type: 'PUT',
+                dataType: 'json',
+                xhrFields: {withCredentials: true},
+                data: {'instance':{'is_cancelled': 'true'}},
+                success: (message) => {
+                    console.log(message);
+                }, error: () => {
+                    console.log("Error Cancelling flight");
+                }
+            });
+        }
+    }
+
   alert('Flight cancelled! Thanks for keeping us all safe :) ');
   build_homepage();
 };
@@ -123,7 +142,7 @@ var build_flight_interface = function (acode) {
     error: () => { alert('error getting airports with code'); }
   });
 
-  alert('please wait 10');
+  alert('please wait 10 seconds while database is read');
 
   let correctflights = getflightinfo(acodetoaid(acode));
 
@@ -132,6 +151,7 @@ var build_flight_interface = function (acode) {
   let departures = correctflights[0];
   let arrivals = correctflights[1];
 
+  body.append('<h1> </h1>')
 
   body.append('<div class="flight departures">');
   for (let i = 0; i < departures.length; i++) {
