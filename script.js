@@ -1,13 +1,13 @@
 // Use this URL for API Calls
 var root_url = "http://comp426.cs.unc.edu:3001/";
-var acode = 'CLT';
+
 
 
 $(document).ready(function () {
 
   login();
   //getcities();
-    build_flight_interface('CLT');
+    build_flight_interface('BOS');
 
 
 });
@@ -45,7 +45,6 @@ var acodetoaid = function (acode) {
 
 var aidtocity = function (aid) {
 
-
   $.ajax({
     url: root_url + 'airports',
     type: 'GET',
@@ -72,17 +71,19 @@ var build_flight_interface = function (acode) {
     let body = $('body');
     body.empty();
     // Get airport id given airport code & Get all flight objects that go through that airport
+
     let flights = getflightinfo(acodetoaid(acode));
 
     console.log(flights);
     let departures = flights[0];
     let arrivals = flights[1];
 
-    alert('departures:' + departures.length);
+    alert('departures: ' + departures.length);
 
     body.append('<div class="flight departures">');
     for(let i = 0; i < departures.length; i++){
         alert('d'+i);
+        console.log('departure'+i+ departures[i].arrival_id);
         body.append(`
         <div class="d" `+ i +` >
             <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
