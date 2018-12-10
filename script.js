@@ -6,7 +6,8 @@ $(document).ready(function () {
 
   login();
   //getcities();
-    //build_flight_interface('BOS');
+   // alert('return value of iscancelled: '+iscancelled(559169));
+    build_flight_interface('CLT');
 
 
 });
@@ -28,49 +29,29 @@ var getweatherdata = function (city) {
 
 
 var acodetoaid = function (acode) {
-  let value = 7;
-  $.ajax({
-    url: root_url + 'airports?filter[code]=' + acode,
-    type: 'GET',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      value = response[0].id;
-    },
-    error: () => { alert('error'); return value; }
-  });
-  alert('Converting airport code to airport id');
-  return value;
+  return airports_w_code.id;
 };
 
 var aidtocity = function (aid) {
-    let value = 'error';
-
-  $.ajax({
-    url: root_url + 'airports',
-    type: 'GET',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-
-      console.log(response);
-      for (let i = 0; i < response.length; i++) {
-        if (response[i].id == aid) {
-          value = response[i].city;
+    for (let i = 0; i < allairports.length; i++) {
+        if (allairports[i].id == aid) {
+            return allairports[i].city;
         }
-      }
-    },
-    error: () => { alert('error in aidtoacode'); }
-
-  });
-  alert('loading aidtocity');
-  return value;
+    }
 };
 
 // AJAX GET request for all flight instances
 // Iterate through all instances and find instance with matching fid
 // Return the boolean response[i].is_cancelled
 var iscancelled = function(fid){
-
-
+    for(let i = 0; i < instances.length; i++){
+        if(instances[i].flight_id == fid){
+            console.log('current id is: '+instances[i].flight_id);
+            console.log('given fid is: '+fid);
+            console.log('flight cancelled?:' + instances[i].is_cancelled);
+            return instances[i].is_cancelled;
+        }
+    }
 };
 
 // AJAX PUT request on specific instance that matches fid that sets is_cancelled to true
@@ -82,29 +63,84 @@ var cancelflight = function (fid){
 
 };
 
+
+var instances = [];
+var allairports = [];
+var airports_w_code = [];
+var flights = [];
+
 var build_flight_interface = function (acode) {
     let body = $('body');
     body.empty();
     // Get airport id given airport code & Get all flight objects that go through that airport
 
-    let flights = getflightinfo(acodetoaid(acode));
 
-    console.log(flights);
-    let departures = flights[0];
-    let arrivals = flights[1];
 
-    alert('departures: ' + departures.length);
+    // Get all instances and store into local variable
+    $.ajax({
+        url: root_url + 'instances',
+        type: 'GET',
+        xhrFields: { withCredentials: true },
+        success: (response) => {
+            instances = response;
+        },
+        error: () => { alert('error getting instances'); return value; }
+    });
+
+    // Load all flights and store into local variable
+    $.ajax({
+        url: root_url + 'flights',
+        type: 'GET',
+        dataType: 'json',
+        xhrFields: { withCredentials: true },
+        success: (response) => {
+            console.log('flight get response: '+response);
+            flights = response;
+        }
+    });
+
+    // Load all airports and store into local variable
+    $.ajax({
+        url: root_url + 'airports',
+        type: 'GET',
+        xhrFields: { withCredentials: true },
+        success: (response) => {
+            allairports = response;
+        },
+        error: () => { alert('error in getting airports'); }
+
+    });
+
+    // Load all airports with correct airport code
+    $.ajax({
+        url: root_url + 'airports?filter[code]=' + acode,
+        type: 'GET',
+        xhrFields: { withCredentials: true },
+        success: (response) => {
+            airports_w_code = response[0];
+        },
+        error: () => { alert('error getting airports with code'); }
+    });
+
+    alert('please wait 10');
+
+    let correctflights = getflightinfo(acodetoaid(acode));
+
+
+    console.log(correctflights);
+    let departures = correctflights[0];
+    let arrivals = correctflights[1];
+
 
     body.append('<div class="flight departures">');
     for(let i = 0; i < departures.length; i++){
-        alert('d'+i);
         console.log('departure'+i+ departures[i].arrival_id);
         body.append(`
         <div class="d" `+ i +` >
             <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
             <span class="destination"> Destination: ` + aidtocity(departures[i].arrival_id) +  `</span>
             <span class="flightnum"> Flight number: ` +  departures[i].number + `  </span>
-            <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
+            <span class="cancel"> Is cancelled? `+ iscancelled(departures[i].id)+`<button class="cancel"> Cancel Flight </button>   </span>
         </div>
         `);
     }
@@ -112,16 +148,15 @@ var build_flight_interface = function (acode) {
     body.append('</div>');
     body.append('<br> <br>');
 
-    alert('arrivals: ' + arrivals.length);
+
     body.append('<div class="flight arrivals">');
     for(let i = 0; i < arrivals.length; i++){
-        alert('a'+i);
         body.append(`
          <div class="a` + i +`">
             <span class="time"> Departs at: ` + arrivals[i].departs_at + ` </span>
             <span class="destination"> Destination: ` + aidtocity(arrivals[i].departure_id) + ` </span>
             <span class="flightnum"> Flight number: ` +  arrivals[i].number + `  </span>
-            <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
+            <span class="cancel"> Is cancelled? `+ iscancelled(arrivals[i].id)+`<button class="cancel"> Cancel Flight </button>   </span>
          </div>
         `);
     }
@@ -184,26 +219,15 @@ var getcities = function () {
 var getflightinfo = function (aid) {
   let departure = [];
   let arrival = [];
-  $.ajax({
-    url: root_url + 'flights',
-    type: 'GET',
-    dataType: 'json',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-     
-      for (var x = 0; x  <response.length; x++){
-        if( response[x].departure_id == aid){
-          departure.push(response[x]);
+    for (var x = 0; x  <flights.length; x++){
+        if( flights[x].departure_id == aid){
+            departure.push(flights[x]);
         }
-        if(response[x].arrival_id == aid){
-          arrival.push(response[x]);
+        if(flights[x].arrival_id == aid){
+            arrival.push(flights[x]);
         }
-      }
     }
-  });
-  alert('Flight info retrieved');
   return [departure, arrival];
-
 };
 
 
