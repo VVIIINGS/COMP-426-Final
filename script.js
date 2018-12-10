@@ -2,7 +2,6 @@
 var root_url = "http://comp426.cs.unc.edu:3001/";
 
 
-
 $(document).ready(function () {
 
   login();
@@ -44,6 +43,7 @@ var acodetoaid = function (acode) {
 };
 
 var aidtocity = function (aid) {
+    let value = 'error';
 
   $.ajax({
     url: root_url + 'airports',
@@ -53,18 +53,16 @@ var aidtocity = function (aid) {
 
       console.log(response);
       for (let i = 0; i < response.length; i++) {
-        if (response[i].id = aid) {
-          //TODO: replace test city code above with variable
-          console.log(response[i].city);
-          return (response[i].city);
-
+        if (response[i].id == aid) {
+          value = response[i].city;
         }
       }
     },
     error: () => { alert('error in aidtoacode'); }
 
   });
-
+  alert('loading aidtocity');
+  return value;
 };
 
 var build_flight_interface = function (acode) {
@@ -112,7 +110,7 @@ var build_flight_interface = function (acode) {
     }
 
     body.append('</div>');
-alert('you made it');
+
 };
 
 var login = function () {
