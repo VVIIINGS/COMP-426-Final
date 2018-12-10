@@ -86,7 +86,7 @@ var build_flight_interface = function (acode) {
         body.append(`
         <div class="d" `+ i +` >
             <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
-            <span class="destination"> Destination: ` + aidtoacity(departures[i].arrival_id) +  `</span>
+            <span class="destination"> Destination: ` + aidtocity(departures[i].arrival_id) +  `</span>
             <span class="flightnum"> Flight number: ` +  departures[i].number + `  </span>
             <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
         </div>
@@ -103,7 +103,7 @@ var build_flight_interface = function (acode) {
         body.append(`
          <div class="a` + i +`">
             <span class="time"> Departs at: ` + arrivals[i].departs_at + ` </span>
-            <span class="destination"> Destination: ` + aidtoacity(arrivals[i].departure_id) + ` </span>
+            <span class="destination"> Destination: ` + aidtocity(arrivals[i].departure_id) + ` </span>
             <span class="flightnum"> Flight number: ` +  arrivals[i].number + `  </span>
             <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
          </div>
