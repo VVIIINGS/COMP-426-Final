@@ -303,3 +303,44 @@ var temp_release = function () {
   var rain_slider = document.getElementById("rain_box")
   add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 }
+
+//SJ-add weather value for airport to homepage
+var postweather = function (city, airport_code, temp, snow, rain) {
+  $.ajax({
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=9a3acc511a5d16d65f34add8dc6dfbd6",
+    type: "GET",
+    dataType: "jsonp",
+    success: function (data) {
+      var snow_amt = 0
+      var rain_amt = 0
+      if (data.snow !== undefined) {
+        if (data.snow["1h"] !== undefined) {
+          snow_amt = snow_amt + data.snow["1h"];
+        }
+        if (data.snow["3h"] !== undefined) {
+          snow_amt = snow_amt + data.snow["3h"];
+        }
+      }
+      if (data.rain !== undefined) {
+        if (data.rain["1h"] !== undefined) {
+          rain_amt = rain_amt + data.rain["1h"];
+        }
+        if (data.rain["3h"] !== undefined) {
+          rain_amt = rain_amt + data.rain["3h"];
+        }
+      }
+      if (data.main.temp < temp && (snow == Boolean(snow_amt)) && (rain == Boolean(rain_amt))) {
+        //console.log(airport_code)
+        //$('.ticketwindow').append(data.name + "... temp: " + data.main.temp + ", snow: " + snow_amt + ", rain: " + rain_amt +airport_code+ "<br>")
+        //           document.getElementById("weather").innerHTML = "temp in " + data.name + ": " + data.main.temp + ", snow: " + snow_amt + ", rain: " + rain_amt;
+        var airport = $('<div class="airport" id=' + airport_code + ' data-temp=' + temp + ' data-snow=' + snow_amt + ' data-rain=' + rain_amt + '> </div>');
+        airport.append(' <h2><div class="cityname">' + city + ' - ' + airport_code + '</div></h2>');
+        airport.append('<div class="weather">Temperature: <span class="temp" >' + Math.round(data.main.temp) + '</span>&deg F</div>')
+        airport.append('<div class="snow">Last Hour Snow: <span class="snow" >' + snow_amt + '</span>mm</div>')
+        airport.append('<div class="rain">Last Hour Rain: <span class="rain" >' + rain_amt + '</span>mm</div>')
+        airport.append('<button class="button" onclick="newpage(' + airport_code + ')">View Flights</button>')
+        $('.ticketwindow').append(airport);
+      }
+    }
+  })
+}
