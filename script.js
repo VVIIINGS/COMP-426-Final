@@ -65,6 +65,23 @@ var aidtocity = function (aid) {
   return value;
 };
 
+// AJAX GET request for all flight instances
+// Iterate through all instances and find instance with matching fid
+// Return the boolean response[i].is_cancelled
+var iscancelled = function(fid){
+
+
+};
+
+// AJAX PUT request on specific instance that matches fid that sets is_cancelled to true
+// Return iscancelled(fid)
+// Set this method's return value to flight status span on button click
+// Effectively, this should cancel the flight then update interface
+var cancelflight = function (fid){
+
+
+};
+
 var build_flight_interface = function (acode) {
     let body = $('body');
     body.empty();
