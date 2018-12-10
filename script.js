@@ -282,13 +282,10 @@ var build_homepage = function () {
 //when the button is clicked, it converts button value to a string
 //NEEDS TO BE UPDATED TO RUN HUTCH'S CODE
 var newpage = function (CityCode) {
-  create_page(CityCode.id)
+  build_flight_interface(CityCode.id)
 }
 
-var create_page = function (citycode) {
-  //this is Hutch and Michael's create newpage function 
-  console.log(citycode)
-}
+
 
 //SJ-when slider is moved, changed page temp value
 var temp_update = function () {
@@ -307,7 +304,7 @@ var temp_release = function () {
 //SJ-add weather value for airport to homepage
 var postweather = function (city, airport_code, temp, snow, rain) {
   $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=9a3acc511a5d16d65f34add8dc6dfbd6",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=1f6c7d09a28f1ddccf70c06e2cb75ee4",
     type: "GET",
     dataType: "jsonp",
     success: function (data) {
