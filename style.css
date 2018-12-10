@@ -141,3 +141,47 @@ input:checked + .toggleslider:before {
   border-radius: 50%;
 }
 /*end toggle baby slider*/
+
+
+/*MW: arrivals CSS*/
+
+div.arrivals{
+  float: left;
+  width: auto;
+  height: 500px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+  overflow: scroll;
+  color: purple;
+}
+
+div.departures{
+  float: right;
+  width: auto;
+  height: 5px;
+  border: 3px solid #A34444;
+  padding: 10px;
+  overflow: scroll;
+  color: rgb(235, 2, 2);
+}
+
+
+#departures{
+  float: right;
+  width: auto;
+  height: 5px;
+  border: 3px solid #A34444;
+  padding: 10px;
+  overflow: scroll;
+  color: rgb(235, 2, 2);
+}
+
+#arrivals{
+  float: left;
+  width: auto;
+  height: 500px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+  overflow: scroll;
+  color: purple;
+}
