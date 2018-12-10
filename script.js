@@ -165,12 +165,12 @@ var build_flight_interface = function (acode) {
   for (let i = 0; i < departures.length; i++) {
 
     console.log('departure' + i + departures[i].arrival_id);
-    let departures_div = $('.departures')
-    let other_div = $('<div class="a"></div>')
-    other_div.append('<span class="time"> Departs at: ' + departures[i].departs_at.slice(11, 16) + ' </span>')
-    other_div.append('<span class="destination"> Destination: ' + aidtocode(departures[i].arrival_id) + '</span>')
-    other_div.append('<span class="flightnum"> Flight number: ' + departures[i].number + '  </span>')
-    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(departures[i].id) + '<button class="cancel" onclick="cancelflight( ' + departures[i].id + ')"> Cancel Flight </button>   </span>')
+    let departures_div = $('.departures');
+    let other_div = $('<div class="a"></div>');
+    other_div.append('<span class="time"> Departs at: ' + departures[i].departs_at.slice(11, 16) + ' </span>');
+    other_div.append('<span class="destination"> Destination: ' + aidtocode(departures[i].arrival_id) + '</span>');
+    other_div.append('<span class="flightnum"> Flight number: ' + departures[i].number + '  </span>');
+    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(departures[i].id) + '<button class="cancel" onclick="cancelflight( ' + departures[i].id + ')"> Cancel Flight </button>   </span>');
 
     departures_div.append(other_div);
 
@@ -196,10 +196,10 @@ var build_flight_interface = function (acode) {
 
     let arrival_div = $('.arrivals')
     let other_div = $('<div class="d"></div>')
-    other_div.append('<span class="time"> Arrives at: ' + arrivals[i].arrives_at.slice(11, 16) + ' </span>')
-    other_div.append('<span class="destination"> From: ' + aidtocode(arrivals[i].departure_id) + '</span>')
-    other_div.append('<span class="flightnum"> Flight number: ' + arrivals[i].number + '  </span>')
-    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(arrivals[i].id) + '<button class="cancel" onclick="cancelflight( ' + arrivals[i].id + ')"> Cancel Flight </button>   </span>')
+    other_div.append('<span class="time"> Arrives at: ' + arrivals[i].arrives_at.slice(11, 16) + ' </span>');
+    other_div.append('<span class="destination"> From: ' + aidtocode(arrivals[i].departure_id) + '</span>');
+    other_div.append('<span class="flightnum"> Flight number: ' + arrivals[i].number + '  </span>');
+    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(arrivals[i].id) + '<button class="cancel" onclick="cancelflight( ' + arrivals[i].id + ')"> Cancel Flight </button>   </span>');
     arrival_div.append(other_div);
   }
 };
@@ -239,7 +239,7 @@ var login = function () {
       //$loginSubmitButton.prop('disabled', false);
     },
   });
-}
+};
 
 
 
@@ -287,40 +287,40 @@ var add_to_page = function (temp, snow, rain) {
       }
     }
   });
-}
+};
 
 //SJ - create the home page
 var build_homepage = function () {
   let body = $('body');
   body.empty();
   body.append("<h1>Weather</h1>")
-  let windowcontainer = $('<div class="window-container"></div>')
+  let windowcontainer = $('<div class="window-container"></div>');
   body.append(windowcontainer)
   let search = $('<div class="search"></div>');
-  search.append('<p>Max Temperature: <span id="demo">123</span></p>')
-  let slidecontainer = $('<div class="slidecontainer"></div')
+  search.append('<p>Max Temperature: <span id="demo">123</span></p>');
+  let slidecontainer = $('<div class="slidecontainer"></div');
   slidecontainer.append('<input type="range" min="-32" max="123" value="123" class="slider" id="myRange" onmouseup="temp_release()" oninput="temp_update()">');
   search.append(slidecontainer);
   search.append('<p>Snow:</p>');
   let switchcontainer1 = $('<label class="switch"></label>');
   switchcontainer1.append('<input type="checkbox" id="snow_box" oninput="temp_release()">');
   switchcontainer1.append('<span class="toggleslider round"></span>');
-  search.append(switchcontainer1)
-  search.append('<p>Rain:</p>')
+  search.append(switchcontainer1);
+  search.append('<p>Rain:</p>');
   let switchcontainer2 = $('<label class="switch"></label>');
   switchcontainer2.append('<input type="checkbox" id="rain_box" oninput="temp_release()">');
   switchcontainer2.append('<span class="toggleslider round"></span>');
-  search.append(switchcontainer2)
+  search.append(switchcontainer2);
   windowcontainer.append(search);
   windowcontainer.append('<div class="ticketwindow"></div>');
 
-}
+};
 
 //when the button is clicked, it converts button value to a string
 //NEEDS TO BE UPDATED TO RUN HUTCH'S CODE
 var newpage = function (CityCode) {
   build_flight_interface(CityCode.id)
-}
+};
 
 
 
@@ -329,15 +329,15 @@ var temp_update = function () {
   var slider = document.getElementById("myRange");
   var output = document.getElementById("demo");
   output.innerHTML = slider.value
-}
+};
 //SJ - when temp slider is released, refresh the airports
 var temp_release = function () {
   console.log("BUTTON PUSHED")
   var slider = document.getElementById("myRange");
-  var snow_slider = document.getElementById("snow_box")
-  var rain_slider = document.getElementById("rain_box")
+  var snow_slider = document.getElementById("snow_box");
+  var rain_slider = document.getElementById("rain_box");
   add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-}
+};
 
 //SJ-add weather value for airport to homepage
 var postweather = function (city, airport_code, temp, snow, rain) {
@@ -370,12 +370,12 @@ var postweather = function (city, airport_code, temp, snow, rain) {
         //           document.getElementById("weather").innerHTML = "temp in " + data.name + ": " + data.main.temp + ", snow: " + snow_amt + ", rain: " + rain_amt;
         var airport = $('<div class="airport" id=' + airport_code + ' data-temp=' + temp + ' data-snow=' + snow_amt + ' data-rain=' + rain_amt + '> </div>');
         airport.append(' <h2><div class="cityname">' + city + ' - ' + airport_code + '</div></h2>');
-        airport.append('<div class="weather">Temperature: <span class="temp" >' + Math.round(data.main.temp) + '</span>&deg F</div>')
-        airport.append('<div class="snow">Last Hour Snow: <span class="snow" >' + snow_amt + '</span>mm</div>')
-        airport.append('<div class="rain">Last Hour Rain: <span class="rain" >' + rain_amt + '</span>mm</div>')
-        airport.append('<button class="button" onclick="newpage(' + airport_code + ')">View Flights</button>')
+        airport.append('<div class="weather">Temperature: <span class="temp" >' + Math.round(data.main.temp) + '</span>&deg F</div>');
+        airport.append('<div class="snow">Last Hour Snow: <span class="snow" >' + snow_amt + '</span>mm</div>');
+        airport.append('<div class="rain">Last Hour Rain: <span class="rain" >' + rain_amt + '</span>mm</div>');
+        airport.append('<button class="button" onclick="newpage(' + airport_code + ')">View Flights</button>');
         $('.ticketwindow').append(airport);
       }
     }
   })
-}
+};
