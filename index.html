@@ -3,50 +3,49 @@
 
 <head>
 
-  <title>A4 API Example</title>
+  <title>SMH Final Project</title>
   <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
   <script src="script.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <h1>Final Project</h1>
-
-  <div id="login_div">
-    User: <input type="text" id="login_user"><br>
-    Password: <input type="text" id="login_pass"><br>
-    <button id="login_btn">Login</button>
-  </div>
-  <div id="mesg_div"></div>
-
+  <h1>Team SMH Final Project</h1>
   <div class="window-container">
 
     <div class="search">
-      this is where the picky filter stuff can go
-
-          <div class="slidecontainer">
-      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-      <p>Value: <span id="demo"></span></p>
+      <p>Max Temperature: <span id="demo"></span></p>
+      <div class="slidecontainer">
+        <input type="range" min="-32" max="123" value="50" class="slider" id="myRange" onmouseup="temp_release()">
       </div>
-      
-        <div class="nobaby">
-          <p>No baby-Off/On Switch:<br>Toggle switch on to eliminate children two years old and under</p>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="nobabyslider round"></span>
-              </label>
 
-      </div>
-    
+      <p>Snow:</p>
+      <label class="switch">
+        <input type="checkbox" id="snow_box">
+        <span class="toggleslider round"></span>
+      </label>
+      <p>Rain:</p>
+      <label class="switch">
+        <input type="checkbox" id="rain_box">
+        <span class="toggleslider round"></span>
+      </label>
     </div>
 
     <div class="ticketwindow">
       this is where the ticket view can go
+      <div class="airport" id="RDU" data-temp="34" data-snow=".05" data-rain="1.2">
+        <div class="cityname">Charlotte</div>
+        <div class="weather">Temperature: <span class="temp" id="charlotte-temp">34</span> Degrees Fahrenheight</div>
+        <div class="snow">Last Hour Snow: <span class="snow" id="charlotte-snow">.05</span>mm</div>
+        <div class="rain">Last Hour Rain: <span class="rain" id="charlotte-rain">1.2</span>mm</div>
+        <button class="button" onclick="postweather('charlotte')">Sort by Decreasing Count</button>
+      </div>
+    
     </div>
 
-    
-  </div>
 
+
+  </div>
 
 
 </body>

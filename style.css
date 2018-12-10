@@ -1,126 +1,143 @@
 body{
-background-color: purple;
+  background-color: rgb(26, 44, 87);
+  color: rgb(209, 166, 131);
+  padding-left: 20px;
 
-}
-.window-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
   }
-
+.window-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+  
 .search{
-    background-color: yellow;
-    width: 25%;
+  background-color: #d6b789;
+  width: 15%;
+  border-radius: 20px;
+  line-height: 5%;
+  padding: 10px;
+  text-align: center;
+  color: rgb(26, 44, 87);
+  font-size: 20px;
+  padding-top: 10%;
 }
-
+  
 .ticketwindow{
-    background-color: green;
+  background-color: #d6b789;
+  width: 77%;
+  height: 650px;
+  overflow-y: auto;
+  align-content: center;
+  border-radius: 20px;
+  padding: 20px;
+  color: rgb(26, 44, 87)
 
-    width: 75%;
 }
-
-
+.airport{
+  border: 2px groove palevioletred;
+  padding: 2px;
+  border-radius: 5px;
+}    
+    
 /*MW: script for slider*/
 .slidecontainer {
-    width: 100%; /* Width of the outside container */
+  width: 100%; /* Width of the outside container */
 }
-
+  
 /* Mouse-over effects */
 .slider {
-    -webkit-appearance: none;
-    width: 90%;
-    height: 15px;
-    border-radius: 5px;   
-    background: #d3d3d3;
-    outline: none;
-    /*opacity: 0.7; */
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+  -webkit-appearance: none;
+  width: 90%;
+  height: 15px;
+  border-radius: 5px;   
+  background: rgb(180, 151, 126);
+  outline: none;
+  /*opacity: 0.7; */
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
-
+  
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%; 
-    background: #4CAF50;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: rgb(26, 44, 87);
+  cursor: pointer;
 }
-
+  
 .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgb(26, 44, 87);
+  cursor: pointer;
 }
-
-/* end css for slider */
-
-
-/*MW: css for no baby */
-
+  
+  /* end css for slider */
+  
+  
+/*MW: css for toggle switches */
+  
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
+  width: 100px;
   height: 34px;
 }
-
+  
 .switch input { 
   opacity: 0;
   width: 0;
   height: 0;
 }
-
-.nobabyslider {
+  
+.toggleslider {
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgb(180, 151, 126);
   -webkit-transition: .4s;
   transition: .4s;
 }
-
-.nobabyslider:before {
+  
+.toggleslider:before {
   position: absolute;
   content: "";
   height: 26px;
   width: 26px;
-  left: 4px;
+  left: 10px;
   bottom: 4px;
   background-color: white;
   -webkit-transition: .4s;
-  transition: .4s;
+  transition: .4s;   
 }
-
-input:checked + .nobabyslider {
-  background-color: #2196F3;
-}
-
-input:focus + .nobabyslider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .nobabyslider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-.nobabyslider.round {
-    border-radius: 34px;
-  }
   
-  .nobabyslider.round:before {
-    border-radius: 50%;
-  }
-
-
-  /*end no baby slider*/
-
+input:checked + .toggleslider {
+  background-color: rgb(26, 44, 87);
+}
+  
+input:focus + .toggleslider {
+  box-shadow: 0 0 1px rgb(26, 44, 87);
+}
+  
+input:checked + .toggleslider:before {
+  -webkit-transform: translateX(56px);
+  -ms-transform: translateX(56px);
+  transform: translateX(56px);
+}
+  
+.toggleslider.round {
+  border-radius: 34px;
+}
+   
+.toggleslider.round:before {
+  border-radius: 50%;
+}
+/*end toggle baby slider*/

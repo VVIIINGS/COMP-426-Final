@@ -6,7 +6,7 @@ $(document).ready(function () {
 
   login();
   //getcities();
-    build_flight_interface('BOS');
+    //build_flight_interface('BOS');
 
 
 });
