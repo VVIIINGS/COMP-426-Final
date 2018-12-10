@@ -7,32 +7,7 @@ $(document).ready(function () {
 
   login();
   //getcities();
-
-  alert(acodetoaid('CLT'));
-
-  getflightinfo(161226);
-  aidtocity(161226);
-
-  //  console.log(aidtoacode(161140));
-
-
-  //build_flight_interface('CLT');
-
-  //MW: I changed the document read function to include everything 
-  //so it will load of the functions automatically (feel free to change back)
-  // HY We don't need to do this, we can call functions dynamically using onclick functions
-
-  //MW: functions for slider
-  var slider = document.getElementById("myRange");
-  var output = document.getElementById("demo");
-  output.innerHTML = slider.value; // Display the default slider value
-
-  // Update the current slider value (each time you drag the slider handle)
-  slider.oninput = function () {
-    output.innerHTML = this.value;
-  }
-  //MW: end functions for slider
-  //this.build_flight_interface('CLT');
+    build_flight_interface('CLT');
 
 
 });
@@ -94,37 +69,49 @@ var aidtocity = function (aid) {
 };
 
 var build_flight_interface = function (acode) {
-  let body = $('body');
+    let body = $('body');
+    body.empty();
+    // Get airport id given airport code & Get all flight objects that go through that airport
+    let flights = getflightinfo(acodetoaid(acode));
 
-  // Get airport id given airport code & Get all flight objects that go through that airport
-  let flights = getflightinfo(acodetoaid(acode));
-  let departures = flights[0];
-  let arrivals = flights[1];
-  for (let i = 0; i < departures.length; i++) {
-    // body.append(`
-    // <div class="flight departures" >
-    //     <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
-    //     <span class="destination"> Destination: ` + departures[i].     `</span>
-    //
-    // </div>
-    //
-    // `);
-  }
-  // Separate departures and arrivals
-  body.append('<br> <br>');
+    console.log(flights);
+    let departures = flights[0];
+    let arrivals = flights[1];
 
-  for (let i = 0; i < arrivals.length; i++) {
-    body.append(`
-        <div class="flight arrivals" >   
-            
-        
+    alert('departures:' + departures.length);
+
+    body.append('<div class="flight departures">');
+    for(let i = 0; i < departures.length; i++){
+        alert('d'+i);
+        body.append(`
+        <div class="d" `+ i +` >
+            <span class="time"> Departs at: ` + departures[i].departs_at + ` </span>
+            <span class="destination"> Destination: ` + aidtoacity(departures[i].arrival_id) +  `</span>
+            <span class="flightnum"> Flight number: ` +  departures[i].number + `  </span>
+            <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
         </div>
-        
         `);
+    }
+    // Separate departures and arrivals
+    body.append('</div>');
+    body.append('<br> <br>');
 
-  }
+    alert('arrivals: ' + arrivals.length);
+    body.append('<div class="flight arrivals">');
+    for(let i = 0; i < arrivals.length; i++){
+        alert('a'+i);
+        body.append(`
+         <div class="a` + i +`">
+            <span class="time"> Departs at: ` + arrivals[i].departs_at + ` </span>
+            <span class="destination"> Destination: ` + aidtoacity(arrivals[i].departure_id) + ` </span>
+            <span class="flightnum"> Flight number: ` +  arrivals[i].number + `  </span>
+            <span class="cancel"> <button class="cancel"> Cancel Flight </button>   </span>
+         </div>
+        `);
+    }
 
-
+    body.append('</div>');
+alert('you made it');
 };
 
 var login = function () {
@@ -179,7 +166,6 @@ var getcities = function () {
 
 
 var getflightinfo = function (aid) {
-  //aid = 161226;
   let departure = [];
   let arrival = [];
   $.ajax({
@@ -188,27 +174,32 @@ var getflightinfo = function (aid) {
     dataType: 'json',
     xhrFields: { withCredentials: true },
     success: (response) => {
-
-      for (var x = 0; x < response.length; x++) {
-        if (response[x].departure_id == aid) {
+     
+      for (var x = 0; x  <response.length; x++){
+        if( response[x].departure_id == aid){
           departure.push(response[x]);
-
-
         }
-
-        if (response[x].arrival_id == aid) {
+        if(response[x].arrival_id == aid){
           arrival.push(response[x]);
         }
-
-
       }
-
     }
   });
-  //TODO: take alerts and aidtocity function out below, this is for testing
-
   return [departure, arrival];
 
 };
 
 
+
+// //MW: functions for slider
+// var slider = document.getElementById("myRange");
+// var output = document.getElementById("demo");
+// output.innerHTML = slider.value; // Display the default slider value
+//
+// // Update the current slider value (each time you drag the slider handle)
+// slider.oninput = function () {
+//   output.innerHTML = this.value;
+// }
+// //MW: end functions for slider
+// //this.build_flight_interface('CLT');
+//
