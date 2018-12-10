@@ -60,8 +60,8 @@ var iscancelled = function (fid) {
 // Set this method's return value to flight status span on button click
 // Effectively, this should cancel the flight then update interface
 var cancelflight = function (fid) {
-
-
+alert('Flight cancelled! Thanks for keeping us all safe :) ');
+build_homepage();
 };
 
 
@@ -141,7 +141,7 @@ var build_flight_interface = function (acode) {
             <span class="time"> Departs at: ` + departures[i].departs_at.slice(11, 16) + ` </span>
             <span class="destination"> Destination: ` + aidtocity(departures[i].arrival_id) + `</span>
             <span class="flightnum"> Flight number: ` + departures[i].number + `  </span>
-            <span class="cancel"> Is cancelled? `+ iscancelled(departures[i].id) + `<button class="cancel"> Cancel Flight </button>   </span>
+            <span class="cancel"> Is cancelled? `+ iscancelled(departures[i].id) + `<button class="cancel" onclick="cancelflight( ` + departures[i].id  + `)"> Cancel Flight </button>   </span>
         </div>
         `);
   }
@@ -157,7 +157,7 @@ var build_flight_interface = function (acode) {
             <span class="time"> Departs at: ` + arrivals[i].departs_at.slice(11, 16) + ` </span>
             <span class="destination"> Destination: ` + aidtocity(arrivals[i].departure_id) + ` </span>
             <span class="flightnum"> Flight number: ` + arrivals[i].number + `  </span>
-            <span class="cancel"> Is cancelled? `+ iscancelled(arrivals[i].id) + `<button class="cancel"> Cancel Flight </button>   </span>
+            <span class="cancel"> Is cancelled? `+ iscancelled(arrivals[i].id) +`<button class="cancel" onclick="cancelflight( ` + arrivals[i].id  + `)"> Cancel Flight </button>   </span>
          </div>
         `);
   }
