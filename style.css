@@ -9,14 +9,12 @@ body{
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-
-
   
 }
   
 .search{
+  background-color: cadetblue;
   width: 25%;
-    background-color: cadetblue;
   border-radius: 20px;
   line-height: 5%;
   padding: 10px;
@@ -24,23 +22,21 @@ body{
   color: rgb(26, 44, 87);
   font-size: 20px;
   padding-top: 10%;
-    opacity: 75%;
 }
   
 .ticketwindow{
-  width: 40%;
-    background-color: cadetblue;
+  background-color: #5f9ea0;
+  width: 60%;
   height: 650px;
   overflow-y: auto;
   align-content: center;
   border-radius: 20px;
   padding: 20px;
-  color: rgb(26, 44, 87);
-    opacity: 75%;
+  color: rgb(26, 44, 87)
 
 }
 .airport{
-  border: 2px groove rgb(184, 4, 4);
+  border: 2px groove palevioletred;
   padding: 2px;
   border-radius: 5px;
 }    
@@ -68,7 +64,8 @@ body{
   appearance: none;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
+  border-radius: 50%; 
+  background: rgb(26, 44, 87);
   cursor: pointer;
 }
   
@@ -76,6 +73,7 @@ body{
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  background: rgb(26, 44, 87);
   cursor: pointer;
 }
   
@@ -198,68 +196,16 @@ div.departures{
   flex: 15%;
 }
 
-
-/*
-#departures{
-  float: right;
-  width: auto;
-  height: 5px;
-  border: 3px solid #A34444;
-  padding: 10px;
-  overflow: scroll;
-  color: rgb(235, 2, 2);
+.sunny{
+  background-image: url("sunshine.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 100px 100px;
 }
-
-#arrivals{
-  float: left;
-  width: auto;
-  height: 500px;
-  border: 3px solid #73AD21;
-  padding: 10px;
-  overflow: scroll;
-  color: purple;
+.raining{
+  background-image: url("Rain-6s-120x120px.svg");
+ 
 }
-*/
-
-button{
-  background:rgb(184, 4, 4);
-  color:#fff;
-  font-weight:bold;
-  border:none;
-  position:relative;
-  /*height:60px;*/
-  font-size:10px;
-  padding:1px;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-}
-button:hover{
-  background:#fff;
-  color:rgb(184, 4, 4);
-}
-button:before,button:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: rgb(184, 4, 4);
-  transition:400ms ease all;
-}
-button:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-button:hover:before,button:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
-
-.pg2{
-    background-image: url(Rain-6s-120x120px.svg);
-
+.snowing{
+  background-image: url("Sunshine.png")
 }

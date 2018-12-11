@@ -338,8 +338,25 @@ var temp_release = function () {
   var slider = document.getElementById("myRange");
   var snow_slider = document.getElementById("snow_box");
   var rain_slider = document.getElementById("rain_box");
+
+  body = $('body')
+  body.removeClass()
+
+
+  if (rain_slider.checked){
+    body.addClass('raining')
+  }
+  if (snow_slider.checked){
+    body.removeClass();
+    body.addClass('snowing')
+  }
+  if (!snow_slider.checked && !rain_slider.checked){
+    body.addClass('sunny')
+  }
+
   add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 };
+
 var postweather = function (city, airport_id, temp, snow, rain) {
   $.ajax({
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=1f6c7d09a28f1ddccf70c06e2cb75ee4",
