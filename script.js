@@ -6,7 +6,8 @@ $(document).ready(function () {
 
 
   login();
-  build_homepage();
+  //build_homepage();
+  build_flight_interface(161226);
 
 });
 
@@ -35,8 +36,34 @@ var cancelflight = function (instance_id) {
   document.getElementById('instance-' + instance_id).innerHTML = "CANCELLED";
   document.getElementById('button-' + instance_id).remove();
   $('#div-' + instance_id).append('<div class = "cancel"></div> ');
-
+  $('#div-' + instance_id).append('<button class="cancel" id = "button-' + instanceid + '" onclick="restoreflight(' + instanceid + ')"> Restore </button> ')
   alert('Flight cancelled! Thanks for keeping us all safe :) ');
+
+};
+var restoreflight = function (instance_id) {
+
+  $.ajax(root_url + "instances/" + instance_id,
+    {
+      type: "PUT",
+      dataType: "json",
+      xhrFields: { withCredentials: true },
+      data: {
+        "instance": {
+          "is_cancelled": "false"
+        }
+      },
+      success: (message) => {
+        console.log(message);
+      }, error: () => {
+        console.log("Error Restoring flight");
+      }
+    });
+
+  document.getElementById('instance-' + instance_id).innerHTML = "On Time";
+  document.getElementById('button-' + instance_id).remove();
+  //$('#div-' + instance_id).append('<div class = "cancel"></div> ');
+  $('#div-' + instance_id).append('<button class="cancel" id = "button-' + instanceid + '" onclick="cancelflight(' + instanceid + ')"> Cancel </button> ')
+  alert('Flight restored! Thanks for keeping up with consumerism :) ');
 
 };
 
@@ -148,6 +175,10 @@ var build_flight_interface = function (city_id) {
         if (status == "On Time") {
           other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="cancelflight(' + instanceid + ')"> Cancel </button> ');
         }
+        else if (status =="CANCELLED"){
+          other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="restoreflight(' + instanceid + ')"> Restore </button> ');
+
+        }
         else {
           other_div2.append('<div class = "cancel"></div> ');
         }
@@ -216,6 +247,10 @@ var build_flight_interface = function (city_id) {
         other_div2.append('<div class = "status" id = "instance-' + instanceid + '">' + status + '</div>');
         if (status == "On Time") {
           other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="cancelflight(' + instanceid + ')"> Cancel </button> ');
+        }
+        else if (status =="CANCELLED"){
+          other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="restoreflight(' + instanceid + ')"> Restore </button> ');
+
         }
         else {
           other_div2.append('<div class = "cancel"></div> ');
@@ -291,7 +326,7 @@ var add_to_page = function (temp, snow, rain) {
 var build_homepage = function () {
   let body = $('body');
   body.empty();
-  body.addClass('pg2');
+  body.addClass('sunny')
   body.append("<h1>Weather Flight Cancellation Interface</h1>");
   let windowcontainer = $('<div class="window-container"></div>');
   body.append(windowcontainer)
@@ -359,7 +394,7 @@ var temp_release = function () {
 
 var postweather = function (city, airport_id, temp, snow, rain) {
   $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=1f6c7d09a28f1ddccf70c06e2cb75ee4",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=3089e1dc199efe7c1220520179adcc29",
     type: "GET",
     dataType: "jsonp",
     success: function (data) {

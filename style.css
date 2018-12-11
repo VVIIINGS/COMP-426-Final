@@ -209,5 +209,50 @@ div.departures{
  
 }
 .snowing{
-  background-image: url("Sunshine.png")
+  background-image: url("snow.svg")
+}
+
+button{
+  background:rgb(184, 4, 4);
+  color:#fff;
+  font-weight:bold;
+  border:none;
+  position:relative;
+  /*height:60px;*/
+  font-size:10px;
+  padding:1px;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover{
+  background:#fff;
+  color:rgb(184, 4, 4);
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: rgb(184, 4, 4);;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+.airport_title:hover{
+
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+
 }
