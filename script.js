@@ -6,8 +6,8 @@ $(document).ready(function () {
 
 
   login();
-  //build_homepage();
-  build_flight_interface(161226);
+  build_homepage();
+  //build_flight_interface(161226);
 
 });
 
