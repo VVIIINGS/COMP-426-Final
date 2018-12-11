@@ -292,7 +292,7 @@ var build_homepage = function () {
   let body = $('body');
   body.empty();
   body.addClass('pg2');
-  body.append("<h1>Weather Flight Cancellation Interface</h1>")
+  body.append("<h1>Weather Flight Cancellation Interface</h1>");
   let windowcontainer = $('<div class="window-container"></div>');
   body.append(windowcontainer)
   let search = $('<div class="search"></div>');
