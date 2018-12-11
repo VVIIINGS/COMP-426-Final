@@ -129,7 +129,7 @@ var build_flight_interface = function (city_id) {
             }
             else {
               status = "No Flight Today";
-              instanceid = 0;;
+              instanceid = 0;
 
             }
           },
@@ -288,7 +288,7 @@ var add_to_page = function (temp, snow, rain) {
 var build_homepage = function () {
   let body = $('body');
   body.empty();
-  body.append("<h1>Weather</h1>")
+  body.append("<h1>Weather Flight Cancellation Interface</h1>")
   let windowcontainer = $('<div class="window-container"></div>');
   body.append(windowcontainer)
   let search = $('<div class="search"></div>');
