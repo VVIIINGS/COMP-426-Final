@@ -147,7 +147,7 @@ input:checked + .toggleslider:before {
 
 div.arrivals{
   float: left;
-  width: 44%;
+  width: 47%;
   height: 500px;
   border: 3px solid #73AD21;
   padding: 10px;
@@ -156,14 +156,46 @@ div.arrivals{
 }
 
 div.departures{
-  float: right;
-  width: 52%;
+  float: left;
+  width: 47%;
   height: 500px;
   border: 3px solid #A34444;
   padding: 10px;
   overflow: scroll;
   color: rgb(209, 166, 131);
 }
+
+.header{
+  font-weight: bold;
+  border: solid 1px yellow;
+}
+.a{
+  display:flex;
+}
+
+.d{
+  display: flex;
+}
+
+.flight{
+  flex: 12%;
+}
+.from{
+  flex: 25%;
+}
+.depart_time{
+  flex: 12%;
+}
+.arrive_time{
+  flex: 12%;
+}
+.status{
+  flex: 24%;
+}
+.cancel{
+  flex: 15%;
+}
+
 
 /*
 #departures{

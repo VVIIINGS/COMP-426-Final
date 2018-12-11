@@ -3,205 +3,230 @@ var root_url = "http://comp426.cs.unc.edu:3001/";
 
 
 $(document).ready(function () {
-  var slider = document.getElementById("myRange");
-  var snow_slider = document.getElementById("snow_box");
-  var rain_slider = document.getElementById("rain_box");
+
 
   login();
-  //build_homepage();
-  //put in all airports
-  //add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
-
-
-  //getcities();
+  build_homepage();
   //build_flight_interface('BOS');
-  //alert("are you logged in?");
-  build_flight_interface('CLT');
+  //build_flight_interface('CLT');
 
 });
 
 
 
-var acodetoaid = function (acode) {
-  return airports_w_code.id;
-};
 
-var aidtocity = function (aid) {
-  for (let i = 0; i < allairports.length; i++) {
-    if (allairports[i].id == aid) {
-      return allairports[i].city;
-    }
-  }
-};
-var aidtocode = function (aid) {
-  for (let i = 0; i < allairports.length; i++) {
-    if (allairports[i].id == aid) {
-      return allairports[i].code;
-    }
-  }
-};
+var cancelflight = function (instance_id) {
 
-// AJAX GET request for all flight instances
-// Iterate through all instances and find instance with matching fid
-// Return the boolean response[i].is_cancelled
-var iscancelled = function (fid) {
-  for (let i = 0; i < instances.length; i++) {
-    if (instances[i].flight_id == fid) {
-      //console.log('current id is: ' + instances[i].flight_id);
-      //console.log('given fid is: ' + fid);
-      //console.log('flight cancelled?:' + instances[i].is_cancelled);
-      var boolenvalue = instances[i].is_cancelled;
-      console.log(boolenvalue)
-      // if (boolenvalue == "true") {
-      //   return "CANCELLED"
-      // }
-      // if (boolenvalue == "false") {
-      //   return "NO"
-      // }
-      return instances[i].is_cancelled;
-    }
-  }
-};
-
-// AJAX PUT request on specific instance that matches fid that sets is_cancelled to true
-// Return iscancelled(fid)
-// Set this method's return value to flight status span on button click
-// Effectively, this should cancel the flight then update interface
-var cancelflight = function (fid) {
-
-    //updates all tickets to be purchased
-
-    for (let i = 0; i < instances.length; i++) {
-        if (instances[i].flight_id == fid) {
-            $.ajax(root_url + "instances/" + instances[i].id, {
-                type: 'PUT',
-                dataType: 'json',
-                xhrFields: {withCredentials: true},
-                data: {'instance':{'is_cancelled': 'true'}},
-                success: (message) => {
-                    console.log(message);
-                }, error: () => {
-                    console.log("Error Cancelling flight");
-                }
-            });
+  $.ajax(root_url + "instances/" + instance_id,
+    {
+      type: "PUT",
+      dataType: "json",
+      xhrFields: { withCredentials: true },
+      data: {
+        "instance": {
+          "is_cancelled": "true"
         }
-    }
+      },
+      success: (message) => {
+        console.log(message);
+      }, error: () => {
+        console.log("Error Cancelling flight");
+      }
+    });
+
+  document.getElementById('instance-' + instance_id).innerHTML = "CANCELLED";
+  document.getElementById('button-' + instance_id).remove();
+  $('#div-' + instance_id).append('<div class = "cancel"></div> ');
 
   alert('Flight cancelled! Thanks for keeping us all safe :) ');
-  build_homepage();
+  
 };
 
 
-var instances = [];
-var allairports = [];
-var airports_w_code = [];
-var flights = [];
 
-var build_flight_interface = function (acode) {
+
+var build_flight_interface = function (city_id) {
   let body = $('body');
   body.empty();
-  // Get airport id given airport code & Get all flight objects that go through that airport
 
-
-
-  // Get all instances and store into local variable
   $.ajax({
-    url: root_url + 'instances',
+    async: false,
+    url: root_url + 'airports/' + city_id,
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      instances = response;
+      body.append('<h1>'+response.name+'</h1>');
     },
-    error: () => { alert('error getting instances'); return value; }
+    error: () => { alert('Error in getting from city'); }
   });
 
-  // Load all flights and store into local variable
-  $.ajax({
-    url: root_url + 'flights',
-    type: 'GET',
-    dataType: 'json',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      console.log('flight get response: ' + response);
-      flights = response;
-    }
-  });
 
-  // Load all airports and store into local variable
-  $.ajax({
-    url: root_url + 'airports',
-    type: 'GET',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      allairports = response;
-    },
-    error: () => { alert('error in getting airports'); }
-
-  });
-
-  // Load all airports with correct airport code
-  $.ajax({
-    url: root_url + 'airports?filter[code]=' + acode,
-    type: 'GET',
-    xhrFields: { withCredentials: true },
-    success: (response) => {
-      airports_w_code = response[0];
-    },
-    error: () => { alert('error getting airports with code'); }
-  });
-
-  alert('please wait 10 seconds while database is read');
-
-  let correctflights = getflightinfo(acodetoaid(acode));
-
-
-  console.log(correctflights);
-  let departures = correctflights[0];
-  let arrivals = correctflights[1];
-
-  body.append('<h1> </h1>')
 
   body.append('<div class="flight departures"></div>');
-  for (let i = 0; i < departures.length; i++) {
+  body.append('<div class="flight arrivals"></div>');
+  body.append('<div id = "message">LOADING...</div>')
+  let arrival_div = $('.arrivals');
+  arrival_div.append('<h2>Arrivals</h2>');
+  let other_div = $('<div class="a"></div>');
+  other_div.append('<div class = "header flight">Flight</div>');
+  other_div.append('<div class = "header from">From</div>');
+  other_div.append('<div class = "header depart_time">Departs</div>');
+  other_div.append('<div class = "header arrive_time">Arrives</div>');
+  other_div.append('<div class = "header status">Status</div>');
+  other_div.append('<div class = "header cancel">Cancel</div>');
+  arrival_div.append(other_div);
 
-    console.log('departure' + i + departures[i].arrival_id);
-    let departures_div = $('.departures');
-    let other_div = $('<div class="a"></div>');
-    other_div.append('<span class="time"> Departs at: ' + departures[i].departs_at.slice(11, 16) + ' </span>');
-    other_div.append('<span class="destination"> Destination: ' + aidtocode(departures[i].arrival_id) + '</span>');
-    other_div.append('<span class="flightnum"> Flight number: ' + departures[i].number + '  </span>');
-    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(departures[i].id) + '<button class="cancel" onclick="cancelflight( ' + departures[i].id + ')"> Cancel Flight </button>   </span>');
+  let departure_div = $('.departures');
+  departure_div.append('<h2>Departures</h2>');
+  let other_div4 = $('<div class="d"></div>');
+  other_div4.append('<div class = "header flight">Flight</div>');
+  other_div4.append('<div class = "header from">Destination</div>');
+  other_div4.append('<div class = "header depart_time">Departs</div>');
+  other_div4.append('<div class = "header arrive_time">Arrives</div>');
+  other_div4.append('<div class = "header status">Status</div>');
+  other_div4.append('<div class = "header cancel">Cancel</div>');
+  departure_div.append(other_div4);
 
-    departures_div.append(other_div);
+  //get the arrivals
+  $.ajax({
+    url: root_url + 'flights?filter[arrival_id]=' + city_id,
+    type: 'GET',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
+      arrivals = response;
+      //console.log(arrivals)
+      for (let i = 0; i < arrivals.length; i++) {
+        let flightnum = arrivals[i].number;
+        $.ajax({
+          async: false,
+          url: root_url + 'airports/' + arrivals[i].departure_id,
+          type: 'GET',
+          xhrFields: { withCredentials: true },
+          success: (response) => {
+            fromname = response.city;
+          },
+          error: () => { alert('Error in getting from city'); }
+        });
+        let arrivaltime = arrivals[i].arrives_at.slice(11, 16);
+        let departuretime = arrivals[i].departs_at.slice(11, 16);
+        $.ajax({
+          async: false,
+          url: root_url + 'instances?filter[date]=2018-12-11&filter[flight_id]=' + arrivals[i].id,
+          type: 'GET',
+          xhrFields: { withCredentials: true },
+          success: (response) => {
+            if (response[0]) {
+              if (response[0].is_cancelled) {
+                //console.log("CANCELLED")
+                status = "CANCELLED"
+                instanceid = response[0].id
 
-  }
-  // Separate departures and arrivals
-  //body.append('</div>');
-  //body.append('<br> <br>');
+              }
+              else {
+                status = "On Time"
+                instanceid = response[0].id
+              }
+              //is_cancelled = response[0].is_cancelled
+              //console.log(is_cancelled)
+            }
+            else {
+              status = "No Flight Today"
+              instanceid = 0;
+
+            }
+          },
+          error: () => { alert('Error in getting from city'); }
+        });
+        //console.log(flightnum + fromname + arrivaltime + departuretime + status);
+        let other_div2 = $('<div class="a" id = "div-' + instanceid + '"></div>');
+        other_div2.append('<div class = "flight">' + flightnum + '</div>');
+        other_div2.append('<div class = "from">' + fromname + '</div>');
+        other_div2.append('<div class = "depart_time">' + departuretime + '</div>');
+        other_div2.append('<div class = "arrive_time">' + arrivaltime + '</div>');
+        other_div2.append('<div class = "status" id = "instance-' + instanceid + '">' + status + '</div>');
+        if (status == "On Time") {
+          other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="cancelflight(' + instanceid + ')"> Cancel </button> ');
+        }
+        else {
+          other_div2.append('<div class = "cancel"></div> ');
+        }
+        departure_div.append(other_div2);
+      }
+    },
+    error: () => { alert('Error in getting arrivals'); return value; }
+  });
 
 
-  body.append('<div class="flight arrivals">');
-  for (let i = 0; i < arrivals.length; i++) {
-    //   body.append(`
-    //        <div class="a` + i + `">
-    //           <span class="time"> Arrives at: ` + arrivals[i].arrives_at.slice(11, 16) + ` </span>
-    //           <span class="destination"> From: ` + aidtocity(arrivals[i].departure_id) + ` </span>
-    //           <span class="flightnum"> Flight number: ` + arrivals[i].number + `  </span>
-    //           <span class="cancel"> Is cancelled? `+ iscancelled(arrivals[i].id) + `<button class="cancel" onclick="cancelflight( ` + arrivals[i].id + `)"> Cancel Flight </button>   </span>
-    //        </div>
-    //       `);
-    // }
+  //get the departures
+  $.ajax({
+    url: root_url + 'flights?filter[departure_id]=' + city_id,
+    type: 'GET',
+    xhrFields: { withCredentials: true },
+    success: (response) => {
+      arrivals = response;
+      //console.log(arrivals)
+      for (let i = 0; i < arrivals.length; i++) {
+        let flightnum = arrivals[i].number;
+        $.ajax({
+          async: false,
+          url: root_url + 'airports/' + arrivals[i].arrival_id,
+          type: 'GET',
+          xhrFields: { withCredentials: true },
+          success: (response) => {
+            destinationname = response.city;
+          },
+          error: () => { alert('Error in getting from city'); }
+        });
+        let arrivaltime = arrivals[i].arrives_at.slice(11, 16);
+        let departuretime = arrivals[i].departs_at.slice(11, 16);
+        $.ajax({
+          async: false,
+          url: root_url + 'instances?filter[date]=2018-12-11&filter[flight_id]=' + arrivals[i].id,
+          type: 'GET',
+          xhrFields: { withCredentials: true },
+          success: (response) => {
+            if (response[0]) {
+              if (response[0].is_cancelled) {
+                //console.log("CANCELLED")
+                status = "CANCELLED"
+                instanceid = response[0].id
+              }
+              else {
+                status = "On Time"
+                instanceid = response[0].id
+              }
+              //is_cancelled = response[0].is_cancelled
+              //console.log(is_cancelled)
+            }
+            else {
+              status = "No Flight Today"
+              instanceid = 0;
 
-    // body.append('</div>');
+            }
+          },
+          error: () => { alert('Error in getting from city'); }
+        });
+        //console.log(flightnum + fromname + arrivaltime + departuretime + status);
+        let other_div2 = $('<div class="d" id = "div-' + instanceid + '"></div>');
+        other_div2.append('<div class = "flight">' + flightnum + '</div>');
+        other_div2.append('<div class = "from">' + destinationname + '</div>');
+        other_div2.append('<div class = "depart_time">' + departuretime + '</div>');
+        other_div2.append('<div class = "arrive_time">' + arrivaltime + '</div>');
+        other_div2.append('<div class = "status" id = "instance-' + instanceid + '">' + status + '</div>');
+        if (status == "On Time") {
+          other_div2.append('<button class="cancel" id = "button-' + instanceid + '" onclick="cancelflight(' + instanceid + ')"> Cancel </button> ');
+        }
+        else {
+          other_div2.append('<div class = "cancel"></div> ');
+        }
+        arrival_div.append(other_div2);
+      }
+      document.getElementById('message').innerHTML = ""
 
-    let arrival_div = $('.arrivals')
-    let other_div = $('<div class="d"></div>')
-    other_div.append('<span class="time"> Arrives at: ' + arrivals[i].arrives_at.slice(11, 16) + ' </span>');
-    other_div.append('<span class="destination"> From: ' + aidtocode(arrivals[i].departure_id) + '</span>');
-    other_div.append('<span class="flightnum"> Flight number: ' + arrivals[i].number + '  </span>');
-    other_div.append('<span class="cancel"> Is cancelled? ' + iscancelled(arrivals[i].id) + '<button class="cancel" onclick="cancelflight( ' + arrivals[i].id + ')"> Cancel Flight </button>   </span>');
-    arrival_div.append(other_div);
-  }
+    },
+    error: () => { alert('error getting arrivals'); return value; }
+  });
+
 };
 
 var login = function () {
@@ -243,34 +268,6 @@ var login = function () {
 
 
 
-var getflightinfo = function (aid) {
-  let departure = [];
-  let arrival = [];
-  for (var x = 0; x < flights.length; x++) {
-    if (flights[x].departure_id == aid) {
-      departure.push(flights[x]);
-    }
-    if (flights[x].arrival_id == aid) {
-      arrival.push(flights[x]);
-    }
-  }
-  return [departure, arrival];
-};
-
-
-
-// //MW: functions for slider
-// var slider = document.getElementById("myRange");
-// var output = document.getElementById("demo");
-// output.innerHTML = slider.value; // Display the default slider value
-//
-// // Update the current slider value (each time you drag the slider handle)
-// slider.oninput = function () {
-//   output.innerHTML = this.value;
-// }
-// //MW: end functions for slider
-// //this.build_flight_interface('CLT');
-//
 
 //SJ - update home page after each slider event
 var add_to_page = function (temp, snow, rain) {
@@ -283,7 +280,7 @@ var add_to_page = function (temp, snow, rain) {
     success: (response) => {
       cities_array = response;
       for (let i = 0; i < cities_array.length; i++) {
-        postweather(response[i].city, response[i].code, temp, snow, rain)
+        postweather(response[i].city, response[i].id, temp, snow, rain)
       }
     }
   });
@@ -314,10 +311,13 @@ var build_homepage = function () {
   windowcontainer.append(search);
   windowcontainer.append('<div class="ticketwindow"></div>');
 
+  var slider = document.getElementById("myRange");
+  var snow_slider = document.getElementById("snow_box");
+  var rain_slider = document.getElementById("rain_box");
+  add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 };
 
 //when the button is clicked, it converts button value to a string
-//NEEDS TO BE UPDATED TO RUN HUTCH'S CODE
 var newpage = function (CityCode) {
   build_flight_interface(CityCode.id)
 };
@@ -338,9 +338,7 @@ var temp_release = function () {
   var rain_slider = document.getElementById("rain_box");
   add_to_page(slider.value, snow_slider.checked, rain_slider.checked);
 };
-
-//SJ-add weather value for airport to homepage
-var postweather = function (city, airport_code, temp, snow, rain) {
+var postweather = function (city, airport_id, temp, snow, rain) {
   $.ajax({
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=Imperial&APPID=1f6c7d09a28f1ddccf70c06e2cb75ee4",
     type: "GET",
@@ -368,12 +366,12 @@ var postweather = function (city, airport_code, temp, snow, rain) {
         //console.log(airport_code)
         //$('.ticketwindow').append(data.name + "... temp: " + data.main.temp + ", snow: " + snow_amt + ", rain: " + rain_amt +airport_code+ "<br>")
         //           document.getElementById("weather").innerHTML = "temp in " + data.name + ": " + data.main.temp + ", snow: " + snow_amt + ", rain: " + rain_amt;
-        var airport = $('<div class="airport" id=' + airport_code + ' data-temp=' + temp + ' data-snow=' + snow_amt + ' data-rain=' + rain_amt + '> </div>');
-        airport.append(' <h2><div class="cityname">' + city + ' - ' + airport_code + '</div></h2>');
+        var airport = $('<div class="airport" id=' + airport_id + ' data-temp=' + temp + ' data-snow=' + snow_amt + ' data-rain=' + rain_amt + '> </div>');
+        airport.append(' <h2><div class="cityname">' + city + '</div></h2>');
         airport.append('<div class="weather">Temperature: <span class="temp" >' + Math.round(data.main.temp) + '</span>&deg F</div>');
         airport.append('<div class="snow">Last Hour Snow: <span class="snow" >' + snow_amt + '</span>mm</div>');
         airport.append('<div class="rain">Last Hour Rain: <span class="rain" >' + rain_amt + '</span>mm</div>');
-        airport.append('<button class="button" onclick="newpage(' + airport_code + ')">View Flights</button>');
+        airport.append('<button class="button" onclick="build_flight_interface(' + airport_id + ')">View Flights</button>');
         $('.ticketwindow').append(airport);
       }
     }
