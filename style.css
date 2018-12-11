@@ -26,7 +26,7 @@ body{
   
 .ticketwindow{
   background-color: #d6b789;
-  width: 77%;
+  width: 50%;
   height: 650px;
   overflow-y: auto;
   align-content: center;

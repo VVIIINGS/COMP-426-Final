@@ -7,8 +7,6 @@ $(document).ready(function () {
 
   login();
   build_homepage();
-  //build_flight_interface('BOS');
-  //build_flight_interface('CLT');
 
 });
 
@@ -39,7 +37,7 @@ var cancelflight = function (instance_id) {
   $('#div-' + instance_id).append('<div class = "cancel"></div> ');
 
   alert('Flight cancelled! Thanks for keeping us all safe :) ');
-  
+
 };
 
 
@@ -55,7 +53,7 @@ var build_flight_interface = function (city_id) {
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      body.append('<h1>'+response.name+'</h1>');
+      body.append('<h1>' + response.name + '</h1>');
     },
     error: () => { alert('Error in getting from city'); }
   });
@@ -64,7 +62,7 @@ var build_flight_interface = function (city_id) {
 
   body.append('<div class="flight departures"></div>');
   body.append('<div class="flight arrivals"></div>');
-  body.append('<div id = "message">LOADING...</div>')
+  body.append('<div id = "message">LOADING...</div>');
   let arrival_div = $('.arrivals');
   arrival_div.append('<h2>Arrivals</h2>');
   let other_div = $('<div class="a"></div>');
@@ -118,20 +116,20 @@ var build_flight_interface = function (city_id) {
             if (response[0]) {
               if (response[0].is_cancelled) {
                 //console.log("CANCELLED")
-                status = "CANCELLED"
-                instanceid = response[0].id
+                status = "CANCELLED";
+                instanceid = response[0].id;
 
               }
               else {
-                status = "On Time"
-                instanceid = response[0].id
+                status = "On Time";
+                instanceid = response[0].id;
               }
               //is_cancelled = response[0].is_cancelled
               //console.log(is_cancelled)
             }
             else {
-              status = "No Flight Today"
-              instanceid = 0;
+              status = "No Flight Today";
+              instanceid = 0;;
 
             }
           },
@@ -188,18 +186,18 @@ var build_flight_interface = function (city_id) {
             if (response[0]) {
               if (response[0].is_cancelled) {
                 //console.log("CANCELLED")
-                status = "CANCELLED"
-                instanceid = response[0].id
+                status = "CANCELLED";
+                instanceid = response[0].id;
               }
               else {
-                status = "On Time"
-                instanceid = response[0].id
+                status = "On Time";
+                instanceid = response[0].id;
               }
               //is_cancelled = response[0].is_cancelled
               //console.log(is_cancelled)
             }
             else {
-              status = "No Flight Today"
+              status = "No Flight Today";
               instanceid = 0;
 
             }
@@ -221,7 +219,7 @@ var build_flight_interface = function (city_id) {
         }
         arrival_div.append(other_div2);
       }
-      document.getElementById('message').innerHTML = ""
+      document.getElementById('message').innerHTML = "";
 
     },
     error: () => { alert('error getting arrivals'); return value; }
@@ -319,7 +317,7 @@ var build_homepage = function () {
 
 //when the button is clicked, it converts button value to a string
 var newpage = function (CityCode) {
-  build_flight_interface(CityCode.id)
+  build_flight_interface(CityCode.id);
 };
 
 
@@ -328,7 +326,7 @@ var newpage = function (CityCode) {
 var temp_update = function () {
   var slider = document.getElementById("myRange");
   var output = document.getElementById("demo");
-  output.innerHTML = slider.value
+  output.innerHTML = slider.value;
 };
 //SJ - when temp slider is released, refresh the airports
 var temp_release = function () {
