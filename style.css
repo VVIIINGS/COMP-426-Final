@@ -9,11 +9,13 @@ body{
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+
+
   
 }
   
 .search{
-  background-color: #d6b789;
+    background-color: cadetblue;
   width: 15%;
   border-radius: 20px;
   line-height: 5%;
@@ -22,17 +24,19 @@ body{
   color: rgb(26, 44, 87);
   font-size: 20px;
   padding-top: 10%;
+    opacity: 75%;
 }
   
 .ticketwindow{
-  background-color: #d6b789;
+    background-color: cadetblue;
   width: 50%;
   height: 650px;
   overflow-y: auto;
   align-content: center;
   border-radius: 20px;
   padding: 20px;
-  color: rgb(26, 44, 87)
+  color: rgb(26, 44, 87);
+    opacity: 75%;
 
 }
 .airport{
@@ -64,8 +68,7 @@ body{
   appearance: none;
   width: 25px;
   height: 25px;
-  border-radius: 50%; 
-  background: rgb(26, 44, 87);
+  border-radius: 50%;
   cursor: pointer;
 }
   
@@ -73,7 +76,6 @@ body{
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: rgb(26, 44, 87);
   cursor: pointer;
 }
   
@@ -255,4 +257,9 @@ button:after{
 button:hover:before,button:hover:after{
   width:100%;
   transition:800ms ease all;
+}
+
+.pg2{
+    background-image: url(Rain-6s-120x120px.svg);
+
 }

@@ -288,6 +288,7 @@ var add_to_page = function (temp, snow, rain) {
 var build_homepage = function () {
   let body = $('body');
   body.empty();
+  body.addClass('pg2');
   body.append("<h1>Weather Flight Cancellation Interface</h1>")
   let windowcontainer = $('<div class="window-container"></div>');
   body.append(windowcontainer)
