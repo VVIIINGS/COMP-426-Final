@@ -53,9 +53,12 @@ var build_flight_interface = function (city_id) {
     type: 'GET',
     xhrFields: { withCredentials: true },
     success: (response) => {
-      body.append('<h1>' + response.name + '</h1>');
+      body.append('<h1 class = "airport_title">' + response.name + '</h1>');
     },
     error: () => { alert('Error in getting from city'); }
+  });
+  $(".airport_title").click(function () {
+    build_homepage();
   });
 
 
